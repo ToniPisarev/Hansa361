@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - enemyCharacter1
-  - friendlyCharacter1
+  - enemy
+  - friendly
   - GreenProj
   - SquareProjector
   layers:
