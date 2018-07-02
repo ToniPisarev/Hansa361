@@ -3,9 +3,8 @@ using LevelEditor;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof (MapManager))]
-public class MapManagerEditor : Editor
-{
+[CustomEditor(typeof(MapManager))]
+public class MapManagerEditor : Editor {
     private bool _entityFoldout;
 
     public SerializedProperty DefaultShader;
@@ -14,8 +13,7 @@ public class MapManagerEditor : Editor
     public SerializedProperty EntitySet;
     public SerializedProperty IsDrawGizmo;
 
-    public void OnEnable()
-    {
+    public void OnEnable() {
         // Setup the SerializedProperties
         Cells = serializedObject.FindProperty("Cells");
         DefaultShader = serializedObject.FindProperty("DefaultShader");
@@ -23,67 +21,55 @@ public class MapManagerEditor : Editor
         EntitySet = serializedObject.FindProperty("EntitySet");
         IsDrawGizmo = serializedObject.FindProperty("IsDrawGizmo");
 
-        var mm = (MapManager) target;
+        var mm = (MapManager)target;
 
-        for (int index = 0; index < mm.Cells.Count; index++)
-        {
+        for (int index = 0; index < mm.Cells.Count; index++) {
             var cell = mm.Cells[index];
-            if (cell == null)
-            {
+            if (cell == null) {
                 mm.Cells.Remove(cell);
                 index--;
                 continue;
             }
 
-            EditorUtility.SetSelectedWireframeHidden(cell.GetComponent<Renderer>(), true);
+            EditorUtility.SetSelectedRenderState(cell.GetComponent<Renderer>(), EditorSelectedRenderState.Hidden);
 
-            foreach (Tile t in cell.Tiles)
-            {
+            foreach (Tile t in cell.Tiles) {
                 var e = t.Entity;
-                if (e != null)
-                {
-                    EditorUtility.SetSelectedWireframeHidden(e.GetComponent<Renderer>(), true);
-                }
-                else
-                {
+                if (e != null) {
+                    EditorUtility.SetSelectedRenderState(e.GetComponent<Renderer>(), EditorSelectedRenderState.Hidden);
+                } else {
                     t.EntityIndex = -1;
                 }
             }
         }
     }
 
-    public void OnDisable()
-    {
+    public void OnDisable() {
         var mt = EditorWindow.GetWindow<MapDrawing>(true, "");
         mt.Close();
 
-        var mm = (MapManager) target;
+        var mm = (MapManager)target;
 
-        foreach (var cell in mm.Cells)
-        {
-            if (cell != null)
-            {
-                EditorUtility.SetSelectedWireframeHidden(cell.GetComponent<Renderer>(), false);
+        foreach (var cell in mm.Cells) {
+            if (cell != null) {
+                EditorUtility.SetSelectedRenderState(cell.GetComponent<Renderer>(), EditorSelectedRenderState.Wireframe);
 
-                foreach (Tile t in cell.Tiles)
-                {
+                foreach (Tile t in cell.Tiles) {
                     var e = t.Entity;
-                    if (e != null)
-                    {
-                        EditorUtility.SetSelectedWireframeHidden(e.GetComponent<Renderer>(), false);
+                    if (e != null) {
+                        EditorUtility.SetSelectedRenderState(cell.GetComponent<Renderer>(), EditorSelectedRenderState.Wireframe);
                     }
                 }
             }
         }
     }
 
-    public override void OnInspectorGUI()
-    {
+    public override void OnInspectorGUI() {
         //base.OnInspectorGUI();
 
         serializedObject.Update();
 
-        var t = (MapManager) target;
+        var t = (MapManager)target;
         var p = t.transform.position;
         p.x = 0;
         p.z = 0;
@@ -92,18 +78,16 @@ public class MapManagerEditor : Editor
         DefaultShader.stringValue = EditorGUILayout.TextField("Default Shader", DefaultShader.stringValue);
 
         var ts = TextureSet.objectReferenceValue;
-        var newts = EditorGUILayout.ObjectField("Tile Set", ts, typeof (TileSet), false);
-        if (ts != newts && newts != null)
-        {
+        var newts = EditorGUILayout.ObjectField("Tile Set", ts, typeof(TileSet), false);
+        if (ts != newts && newts != null) {
             TextureSet.objectReferenceValue = newts;
             serializedObject.ApplyModifiedProperties();
-            ((MapManager) target).RebuildTextureFromTileSet();
+            ((MapManager)target).RebuildTextureFromTileSet();
         }
 
         var es = EntitySet.objectReferenceValue;
-        var newes = EditorGUILayout.ObjectField("Entity Set", es, typeof (EntitySet), false);
-        if (es != newes)
-        {
+        var newes = EditorGUILayout.ObjectField("Entity Set", es, typeof(EntitySet), false);
+        if (es != newes) {
             EntitySet.objectReferenceValue = newes;
         }
 
@@ -115,22 +99,19 @@ public class MapManagerEditor : Editor
 
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
-        if (GUILayout.Button("Vertex", EditorStyles.miniButtonMid, GUILayout.Width(100)))
-        {
+        if (GUILayout.Button("Vertex", EditorStyles.miniButtonMid, GUILayout.Width(100))) {
             var md = EditorWindow.GetWindow<MapDrawing>(true, "");
             md.Init(t, new VertexDrawState(t));
         }
 
         GUI.enabled = TextureSet.objectReferenceValue != null;
-        if (GUILayout.Button("Textures", EditorStyles.miniButtonMid, GUILayout.Width(100)))
-        {
+        if (GUILayout.Button("Textures", EditorStyles.miniButtonMid, GUILayout.Width(100))) {
             var md = EditorWindow.GetWindow<MapDrawing>(true, "");
             md.Init(t, new TextureMapDrawState(t));
         }
 
         GUI.enabled = EntitySet.objectReferenceValue != null;
-        if (GUILayout.Button("Entities", EditorStyles.miniButtonMid, GUILayout.Width(100)))
-        {
+        if (GUILayout.Button("Entities", EditorStyles.miniButtonMid, GUILayout.Width(100))) {
             var md = EditorWindow.GetWindow<MapDrawing>(true, "");
             md.Init(t, new EntityMapDrawState(t));
         }
@@ -140,8 +121,7 @@ public class MapManagerEditor : Editor
 
         IsDrawGizmo.boolValue = EditorGUILayout.Toggle("Show Grid (editor only):", IsDrawGizmo.boolValue);
 
-        if (GUILayout.Button("Rebuild Textures", EditorStyles.miniButton, GUILayout.Width(150)))
-        {
+        if (GUILayout.Button("Rebuild Textures", EditorStyles.miniButton, GUILayout.Width(150))) {
             t.RebuildTextureFromTileSet();
         }
 

@@ -37,9 +37,9 @@ public class Cell : MonoBehaviour
             {
                 t = GetTileFromPointInCell((int)point.x, (int)point.y);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Debug.Log("Error from Cell class : " + e.ToString());
+                //Debug.Log("Error from Cell class : " + e.ToString());
                 dontDraw = true;
             }
             if (dontDraw == false)
@@ -52,7 +52,7 @@ public class Cell : MonoBehaviour
                 if (t.EntityString.Contains("enemy") && Input.GetMouseButtonDown(1))
                 {
                     //Debug.Log("1: [" + (int)worldPos.x + "," + (int)worldPos.y + "," + (t.GetHeight() + 0.05f) +  "]"); //DEBUG
-                    bgui.currentEnemyPos = new Vector3(worldPos.x, t.GetHeight(), worldPos.y);
+                    //bgui.currentEnemyPos = new Vector3(worldPos.x, t.GetHeight(), worldPos.y);
                 }
             }   
         }

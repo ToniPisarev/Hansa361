@@ -16,9 +16,9 @@ namespace TileDraw
                 if (!textureImporter.isReadable)
                 {
                     AssetDatabase.StartAssetEditing();
-                    textureImporter.textureType = TextureImporterType.Advanced;
+                    textureImporter.textureType = TextureImporterType.Default;
                     textureImporter.isReadable = true;
-                    textureImporter.textureFormat = TextureImporterFormat.ARGB32;
+                    //textureImporter.textureFormat = TextureImporterFormat.ARGB32;
                     AssetDatabase.ImportAsset(path);
                     AssetDatabase.Refresh();
                     AssetDatabase.StopAssetEditing();

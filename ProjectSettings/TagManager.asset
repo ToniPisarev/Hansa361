@@ -23,6 +23,11 @@ TagManager:
   - 3friendlyPlayer
   - 4friendlyPlayer
   - 5friendlyPlayer
+  - thief
+  - warrior
+  - mage
+  - archer
+  - bars
   layers:
   - Default
   - TransparentFX
