@@ -49,6 +49,7 @@ public class CreateNewEquipment {
         DetermineResistance();
         DeterminePrice();
         DetermineName();
+        newEquipment.ItemDescription = "Provides some defense...";
     }
 
     private void DeterminePrice() {

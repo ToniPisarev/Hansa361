@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TileDraw.Map;
 
-[System.Serializable]
 public abstract class Abilities {
     protected float tilesize = 2;
     protected Tile myTile;
@@ -77,7 +76,6 @@ public abstract class Abilities {
 * 
 *---------------------------------------------------------------------------------------------------------------------
 */
-
 
 public class SpearAttack : Abilities {
 
@@ -152,7 +150,6 @@ public class HealingLight : Abilities {
 *---------------------------------------------------------------------------------------------------------------------
 */
 
-
 public class DoubleStab : Abilities {
     public DoubleStab(Cell cell, BaseCharacter character) : base(cell, character) {
 
@@ -191,6 +188,7 @@ public class DoubleStab : Abilities {
 
     }
 }
+
 public class Stab : Abilities {
     public Stab(Cell cell, BaseCharacter character) : base(cell, character) {
 
@@ -227,6 +225,7 @@ public class Stab : Abilities {
 
     }
 }
+
 public class LegSweep : Abilities {
     public LegSweep(Cell cell, BaseCharacter character) : base(cell, character) {
 
@@ -263,6 +262,7 @@ public class LegSweep : Abilities {
 
     }
 }
+
 public class TwoTurn : Abilities {
     public TwoTurn(Cell cell, BaseCharacter character) : base(cell, character) {
 
@@ -311,7 +311,6 @@ public class TwoTurn : Abilities {
 * 
 *---------------------------------------------------------------------------------------------------------------------
 */
-
 
 public class Fireball : Abilities {
 

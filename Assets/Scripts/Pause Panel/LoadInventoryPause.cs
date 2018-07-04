@@ -9,10 +9,11 @@ public class LoadInventoryPause : MonoBehaviour {
     public GameObject IDP;
     public GameObject weaponButton;
     private GameObject InvDetailPanel;
+    public GameObject characterChoosePanel;
 
     // Use this for initialization
     void Start() {
-        InvDetailPanel = IDP;        
+        InvDetailPanel = IDP;
     }
 
     public void ShowAllWeapons() {
@@ -157,25 +158,25 @@ public class LoadInventoryPause : MonoBehaviour {
         Image i = InvDetailPanel.transform.GetChild(0).gameObject.GetComponent<Image>();
         switch (p.PotionType) {
             case BasePotion.PotionTypes.Health:
-                i.sprite = Resources.Load<Sprite>("/Images/RedPotion");
+                i.sprite = Resources.Load<Sprite>("Images/RedPotion");
                 break;
             case BasePotion.PotionTypes.Mana:
-                i.sprite = Resources.Load<Sprite>("/Images/BluePotion");
+                i.sprite = Resources.Load<Sprite>("Images/BluePotion");
                 break;
             case BasePotion.PotionTypes.Speed:
-                i.sprite = Resources.Load<Sprite>("/Images/GreenPotion");
+                i.sprite = Resources.Load<Sprite>("Images/GreenPotion");
                 break;
             case BasePotion.PotionTypes.Defense:
-                i.sprite = Resources.Load<Sprite>("/Images/PurplePotion2");
+                i.sprite = Resources.Load<Sprite>("Images/PurplePotion2");
                 break;
             case BasePotion.PotionTypes.Strength:
-                i.sprite = Resources.Load<Sprite>("/Images/BrownPotion");
+                i.sprite = Resources.Load<Sprite>("Images/BrownPotion");
                 break;
             case BasePotion.PotionTypes.Agility:
-                i.sprite = Resources.Load<Sprite>("/Images/YellowPotion");
+                i.sprite = Resources.Load<Sprite>("Images/YellowPotion");
                 break;
             case BasePotion.PotionTypes.Intellect:
-                i.sprite = Resources.Load<Sprite>("/Images/PurplePotion");
+                i.sprite = Resources.Load<Sprite>("Images/PurplePotion");
                 break;
         }
 
@@ -194,16 +195,16 @@ public class LoadInventoryPause : MonoBehaviour {
         Image i = InvDetailPanel.transform.GetChild(0).gameObject.GetComponent<Image>();
         switch (p.EquipmentType) {
             case BaseEquipment.EquipmentTypes.Armor:
-                i.sprite = Resources.Load<Sprite>("/Images/Armor");
+                i.sprite = Resources.Load<Sprite>("Images/Armor");
                 break;
             case BaseEquipment.EquipmentTypes.Gauntlets:
-                i.sprite = Resources.Load<Sprite>("/Images/Gauntlets");
+                i.sprite = Resources.Load<Sprite>("Images/Gauntlets");
                 break;
             case BaseEquipment.EquipmentTypes.Grieves:
-                i.sprite = Resources.Load<Sprite>("/Images/Grieves");
+                i.sprite = Resources.Load<Sprite>("Images/Grieves");
                 break;
             case BaseEquipment.EquipmentTypes.Helmet:
-                i.sprite = Resources.Load<Sprite>("/Images/Helmet");
+                i.sprite = Resources.Load<Sprite>("Images/Helmet");
                 break;
 
         }
@@ -230,33 +231,33 @@ public class LoadInventoryPause : MonoBehaviour {
             case BaseWeapon.WeaponTypes.Sword:
                 switch (p.ItemRarity) {
                     case BaseStatItem.ItemRaritys.Legendary:
-                        i.sprite = Resources.Load<Sprite>("/Images/Diamond-Sword-Icon");
+                        i.sprite = Resources.Load<Sprite>("Images/Diamond-Sword-Icon");
                         break;
                     case BaseStatItem.ItemRaritys.Flawless:
-                        i.sprite = Resources.Load<Sprite>("/Images/Gold-Sword-Icon");
+                        i.sprite = Resources.Load<Sprite>("Images/Gold-Sword-Icon");
                         break;
                     case BaseStatItem.ItemRaritys.Great:
-                        i.sprite = Resources.Load<Sprite>("/Images/Iron-Sword-Icon");
+                        i.sprite = Resources.Load<Sprite>("Images/Iron-Sword-Icon");
                         break;
                     case BaseStatItem.ItemRaritys.Common:
-                        i.sprite = Resources.Load<Sprite>("/Images/Stone-Sword-Icon");
+                        i.sprite = Resources.Load<Sprite>("Images/Stone-Sword-Icon");
                         break;
                     case BaseStatItem.ItemRaritys.Rusty:
-                        i.sprite = Resources.Load<Sprite>("/Images/Wooden-Sword-Icon");
+                        i.sprite = Resources.Load<Sprite>("Images/Wooden-Sword-Icon");
                         break;
                 }
                 break;
             case BaseWeapon.WeaponTypes.Spear:
-                i.sprite = Resources.Load<Sprite>("/Images/Spear");
+                i.sprite = Resources.Load<Sprite>("Images/Spear");
                 break;
             case BaseWeapon.WeaponTypes.Bow:
-                i.sprite = Resources.Load<Sprite>("/Images/Bow");
+                i.sprite = Resources.Load<Sprite>("Images/Bow");
                 break;
             case BaseWeapon.WeaponTypes.Dagger:
-                i.sprite = Resources.Load<Sprite>("/Images/Dagger");
+                i.sprite = Resources.Load<Sprite>("Images/Dagger");
                 break;
             case BaseWeapon.WeaponTypes.Tomb:
-                i.sprite = Resources.Load<Sprite>("/Images/Book");
+                i.sprite = Resources.Load<Sprite>("Images/Book");
                 break;
         }
 
@@ -280,6 +281,7 @@ public class LoadInventoryPause : MonoBehaviour {
         c.Weapon = w;                                      // equip on c
         GameInformation.PlayerInventory.Weapons.Remove(w); // Remove w from inventory
         InvDetailPanel.SetActive(false);
+        characterChoosePanel.SetActive(false);
         ShowAllWeapons();
     }
 
@@ -320,22 +322,21 @@ public class LoadInventoryPause : MonoBehaviour {
 
     private void equipWeapon(BaseWeapon w) {   // reload all character information
 
+        characterChoosePanel.SetActive(true);
+
         BaseCharacter[] chars = new BaseCharacter[6];
         chars[0] = GameInformation.PlayerCharacter;
 
         if (GameInformation.SideCharacters != null) {
             for (int i = 0; i < GameInformation.SideCharacters.Length; i++) {
-                chars[i+1] = GameInformation.SideCharacters[i];
+                chars[i + 1] = GameInformation.SideCharacters[i];
             }
-        }       
-
-        Transform charPanel = InvDetailPanel.transform.GetChild(6).GetChild(1);
-        charPanel.gameObject.SetActive(true);
+        }
 
         for (int i = 0; i < 6; i++) {
             if (chars[i] != null) // if a character exists...
             {
-                Transform B = charPanel.GetChild(i); // all the char buttons
+                Transform B = characterChoosePanel.transform.GetChild(i); // all the char buttons
                 B.GetChild(0).gameObject.GetComponent<Text>().text = chars[i].PlayerName; // set player name
                 switch (w.WeaponType) // according to weapon type and class
                 {
@@ -386,7 +387,7 @@ public class LoadInventoryPause : MonoBehaviour {
                         break;
                 }
             } else {
-                Transform B = charPanel.GetChild(i); // all the char buttons
+                Transform B = characterChoosePanel.transform.GetChild(i); // all the char buttons
                 B.GetChild(0).gameObject.SetActive(false); // disable button
                 B.gameObject.GetComponent<Button>().interactable = false;
             }
@@ -405,13 +406,12 @@ public class LoadInventoryPause : MonoBehaviour {
             }
         }
 
-        Transform charPanel = InvDetailPanel.transform.GetChild(6).GetChild(1);
-        charPanel.gameObject.SetActive(true);
+        characterChoosePanel.SetActive(true);
 
         for (int i = 0; i < 6; i++) {
             if (chars[i] != null) // if a character exists...
             {
-                Transform B = charPanel.GetChild(i); // all the char buttons
+                Transform B = characterChoosePanel.transform.GetChild(i); // all the char buttons
                 B.GetChild(0).gameObject.GetComponent<Text>().text = chars[i].PlayerName; // set player name
                 Button Button = B.gameObject.GetComponent<Button>();
                 Button.interactable = true;
@@ -420,7 +420,7 @@ public class LoadInventoryPause : MonoBehaviour {
                 Button.onClick.AddListener(delegate { equipEquipmentOnChar(bc, w); });
 
             } else {
-                Transform B = charPanel.GetChild(i); // all the char buttons
+                Transform B = characterChoosePanel.transform.GetChild(i); // all the char buttons
                 B.GetChild(0).gameObject.SetActive(false); // disable button
                 B.gameObject.GetComponent<Button>().interactable = false;
             }

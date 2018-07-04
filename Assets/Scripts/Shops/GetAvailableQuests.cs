@@ -39,7 +39,7 @@ public class GetAvailableQuests : MonoBehaviour {
     }
 
     private void ShowQuestInStore(Quest quest) {
-        GameObject button = (GameObject)Instantiate(Resources.Load("QuestButton"));
+        GameObject button = (GameObject)Instantiate(Resources.Load("QuestButtonQuestKeep"));
         button.transform.SetParent(QuestList.transform);
         SetListener(button.GetComponent<Button>());
         index++;

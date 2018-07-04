@@ -5,17 +5,15 @@ public class PsAutoDestroy : MonoBehaviour {
 
     private ParticleSystem ps;
 
-	void Start () {
+    void Start() {
         ps = GetComponent<ParticleSystem>();
-	}
-	
-	void Update () {
-        if (ps)
-        {
-            if (!ps.IsAlive())
-            {
+    }
+
+    void Update() {
+        if (ps) {
+            if (!ps.IsAlive()) {
                 Destroy(gameObject);
             }
         }
-	}
+    }
 }

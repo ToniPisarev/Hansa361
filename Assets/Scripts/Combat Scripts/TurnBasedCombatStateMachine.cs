@@ -124,11 +124,14 @@ public class TurnBasedCombatStateMachine : MonoBehaviour {
 
         //Gain XP, check for levelup
         Promote(GameInformation.PlayerCharacter);
-        for(int i = 0; i < GameInformation.SideCharacters.Length; i++) {
-            if (GameInformation.SideCharacters != null) {
-                Promote(GameInformation.SideCharacters[i]);
-            }            
+        if (GameInformation.SideCharacters != null) {
+            for (int i = 0; i < GameInformation.SideCharacters.Length; i++) {
+                if (GameInformation.SideCharacters != null) {
+                    Promote(GameInformation.SideCharacters[i]);
+                }
+            }
         }
+        
     }
 
 
@@ -180,11 +183,8 @@ public class TurnBasedCombatStateMachine : MonoBehaviour {
                     character.Intellect += tier;
                 }
 
-                try {
-                    SaveInformation.SaveAllInformation();
-                } catch (Exception e) {
-                    Debug.Log("Couldnt save character information " + e.Message);
-                }
+                SaveInformation.SaveAllInformation();
+                
 
                 content.text += "\n* *\nLevel up!\n* *\n" + character.PlayerName +
                 "\nDefense: " + oldD + "-->" + character.Defense +

@@ -229,33 +229,33 @@ public class EscMenu : MonoBehaviour {
                 case BaseWeapon.WeaponTypes.Sword:
                     switch (c.Weapon.ItemRarity) {
                         case BaseStatItem.ItemRaritys.Legendary:
-                            i.sprite = Resources.Load<Sprite>("/Images/Diamond-Sword-Icon");
+                            i.sprite = Resources.Load<Sprite>("Images/Diamond-Sword-Icon");
                             break;
                         case BaseStatItem.ItemRaritys.Flawless:
-                            i.sprite = Resources.Load<Sprite>("/Images/Gold-Sword-Icon");
+                            i.sprite = Resources.Load<Sprite>("Images/Gold-Sword-Icon");
                             break;
                         case BaseStatItem.ItemRaritys.Great:
-                            i.sprite = Resources.Load<Sprite>("/Images/Iron-Sword-Icon");
+                            i.sprite = Resources.Load<Sprite>("Images/Iron-Sword-Icon");
                             break;
                         case BaseStatItem.ItemRaritys.Common:
-                            i.sprite = Resources.Load<Sprite>("/Images/Stone-Sword-Icon");
+                            i.sprite = Resources.Load<Sprite>("Images/Stone-Sword-Icon");
                             break;
                         case BaseStatItem.ItemRaritys.Rusty:
-                            i.sprite = Resources.Load<Sprite>("/Images/Wooden-Sword-Icon");
+                            i.sprite = Resources.Load<Sprite>("Images/Wooden-Sword-Icon");
                             break;
                     }
                     break;
                 case BaseWeapon.WeaponTypes.Spear:
-                    i.sprite = Resources.Load<Sprite>("/Images/Spear");
+                    i.sprite = Resources.Load<Sprite>("Images/Spear");
                     break;
                 case BaseWeapon.WeaponTypes.Bow:
-                    i.sprite = Resources.Load<Sprite>("/Images/Bow");
+                    i.sprite = Resources.Load<Sprite>("Images/Bow");
                     break;
                 case BaseWeapon.WeaponTypes.Dagger:
-                    i.sprite = Resources.Load<Sprite>("/Images/Dagger");
+                    i.sprite = Resources.Load<Sprite>("Images/Dagger");
                     break;
                 case BaseWeapon.WeaponTypes.Tomb:
-                    i.sprite = Resources.Load<Sprite>("/Images/Book");
+                    i.sprite = Resources.Load<Sprite>("Images/Book");
                     break;
             }
 
@@ -327,33 +327,33 @@ public class EscMenu : MonoBehaviour {
             case BaseWeapon.WeaponTypes.Sword:
                 switch (p.ItemRarity) {
                     case BaseStatItem.ItemRaritys.Legendary:
-                        i.sprite = Resources.Load<Sprite>("/Images/Diamond-Sword-Icon");
+                        i.sprite = Resources.Load<Sprite>("Images/Diamond-Sword-Icon");
                         break;
                     case BaseStatItem.ItemRaritys.Flawless:
-                        i.sprite = Resources.Load<Sprite>("/Images/Gold-Sword-Icon");
+                        i.sprite = Resources.Load<Sprite>("Images/Gold-Sword-Icon");
                         break;
                     case BaseStatItem.ItemRaritys.Great:
-                        i.sprite = Resources.Load<Sprite>("/Images/Iron-Sword-Icon");
+                        i.sprite = Resources.Load<Sprite>("Images/Iron-Sword-Icon");
                         break;
                     case BaseStatItem.ItemRaritys.Common:
-                        i.sprite = Resources.Load<Sprite>("/Images/Stone-Sword-Icon");
+                        i.sprite = Resources.Load<Sprite>("Images/Stone-Sword-Icon");
                         break;
                     case BaseStatItem.ItemRaritys.Rusty:
-                        i.sprite = Resources.Load<Sprite>("/Images/Wooden-Sword-Icon");
+                        i.sprite = Resources.Load<Sprite>("Images/Wooden-Sword-Icon");
                         break;
                 }
                 break;
             case BaseWeapon.WeaponTypes.Spear:
-                i.sprite = Resources.Load<Sprite>("/Images/Spear");
+                i.sprite = Resources.Load<Sprite>("Images/Spear");
                 break;
             case BaseWeapon.WeaponTypes.Bow:
-                i.sprite = Resources.Load<Sprite>("/Images/Bow");
+                i.sprite = Resources.Load<Sprite>("Images/Bow");
                 break;
             case BaseWeapon.WeaponTypes.Dagger:
-                i.sprite = Resources.Load<Sprite>("/Images/Dagger");
+                i.sprite = Resources.Load<Sprite>("Images/Dagger");
                 break;
             case BaseWeapon.WeaponTypes.Tomb:
-                i.sprite = Resources.Load<Sprite>("/Images/Book");
+                i.sprite = Resources.Load<Sprite>("Images/Book");
                 break;
         }
 

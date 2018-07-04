@@ -20,7 +20,7 @@ public class CreateNewPotion {
         ChoosePotionType();
         DetermineEffectiveness();
 
-        newPotion.ItemDescription = "A potion";
+        newPotion.ItemDescription = "This could be useful";
         newPotion.ItemName = newPotion.ItemRarity.ToString() + " Potion of " + newPotion.PotionType.ToString();
         newPotion.ItemID = Random.Range(1, 20);
     }

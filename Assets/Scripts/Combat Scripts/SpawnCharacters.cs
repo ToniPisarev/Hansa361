@@ -31,25 +31,28 @@ public class SpawnCharacters : MonoBehaviour {
 
         // For Demo: Generate 4 side characters
         LoadInformation.LoadAllInformation();
+        int level = GameInformation.PlayerCharacter.PlayerLevel;
 
-        AddNewSideCharacter(CreateNewCharacter(BaseCharacterClass.CharacterClasses.Squire));
-        AddNewSideCharacter(CreateNewCharacter(BaseCharacterClass.CharacterClasses.Apprentice));
         AddNewSideCharacter(CreateNewCharacter(BaseCharacterClass.CharacterClasses.Thief));
-        AddNewSideCharacter(CreateNewCharacter(BaseCharacterClass.CharacterClasses.Archer));
+        if (level > 20) {
+            AddNewSideCharacter(CreateNewCharacter(BaseCharacterClass.CharacterClasses.Apprentice));
+        }
 
         // Get the six friendly chararcter
         friendlyList[0] = GameInformation.PlayerCharacter;
+        int numFriendlies = 1;
 
         if (GameInformation.SideCharacters != null) {
             for (int i = 0; i < GameInformation.SideCharacters.Length; i++) {
                 if (GameInformation.SideCharacters[i] != null) {
+                    numFriendlies++;
                     friendlyList[i+1] = GameInformation.SideCharacters[i];
                 }
             }
         }
 
         // Generate some enemies
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < numFriendlies; i++) {
             enemyList[i] = CreateLeveledCharacter(GameInformation.PlayerCharacter.PlayerLevel);
         }
 

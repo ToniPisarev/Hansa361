@@ -39,7 +39,7 @@ public class CreateNewWeapon {
     private void CreateWeapon(int level, int type) {
         newWeapon = new BaseWeapon();
 
-        newWeapon.ItemDescription = "Description here!";
+        newWeapon.ItemDescription = "A formidable weapon...";
         newWeapon.ItemID = Random.Range(1, 20);
 
         DetermineRarity(level);

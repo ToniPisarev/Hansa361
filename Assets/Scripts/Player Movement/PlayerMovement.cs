@@ -80,7 +80,7 @@ public class PlayerMovement : MonoBehaviour {
                 if (WorldInformation.CurrentQuest.QuestLocation.AreaType == Area.AreaTypes.Plains) {
                     SceneManager.LoadScene("Combat1");
                 } else if (WorldInformation.CurrentQuest.QuestLocation.AreaType == Area.AreaTypes.Desert) {
-                    SceneManager.LoadScene("Combat3");
+                    SceneManager.LoadScene("Combat1");
                 } else {
                     SceneManager.LoadScene("Combat2");
                 }

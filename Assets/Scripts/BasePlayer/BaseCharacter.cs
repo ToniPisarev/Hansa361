@@ -25,9 +25,6 @@ public class BaseCharacter {
     public BaseEquipment Gauntlets { get; set; }
     public BaseEquipment Grieves { get; set; }
     public BaseWeapon Weapon { get; set; }
-    
-    //skill list
-    public List<Abilities> skills = new List<Abilities>();
 
     public int Health { get; set; }     //Health
     public int CurrentHealth {get; set; }

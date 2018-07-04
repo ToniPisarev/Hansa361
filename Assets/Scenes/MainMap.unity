@@ -1742,7 +1742,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11450886, guid: 250eadce8a0c59f4d8b67c6306366b9e, type: 2}
       propertyPath: m_FontData.m_BestFit
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11459322, guid: 250eadce8a0c59f4d8b67c6306366b9e, type: 2}
       propertyPath: m_Color.r
@@ -5553,7 +5553,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -406.1, y: 120}
+  m_AnchoredPosition: {x: -470, y: 120}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &700611982
@@ -10952,6 +10952,7 @@ MonoBehaviour:
   InvContent: {fileID: 843916737}
   IDP: {fileID: 1350215615}
   weaponButton: {fileID: 2049267469}
+  characterChoosePanel: {fileID: 1248512840}
 --- !u!224 &1339520353
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13457,7 +13458,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 87c316b602156405d92e616621658222, type: 3}
     m_FontSize: 32
     m_FontStyle: 0
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 112
     m_Alignment: 0
@@ -13997,10 +13998,6 @@ Prefab:
     - target: {fileID: 190114, guid: a7cc2f3c2b0693041b47da5a6f00d6bc, type: 2}
       propertyPath: m_Name
       value: CharEquipButton1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11414782, guid: a7cc2f3c2b0693041b47da5a6f00d6bc, type: 2}
-      propertyPath: m_Text
-      value: char1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a7cc2f3c2b0693041b47da5a6f00d6bc, type: 2}

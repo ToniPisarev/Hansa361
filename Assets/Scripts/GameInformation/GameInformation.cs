@@ -21,7 +21,9 @@ public class GameInformation : MonoBehaviour {
     public static QuestLog PlayerQuestLog { get; set; }
 
     //Store all character info!
+    [SerializeField]
     public static BaseCharacter PlayerCharacter { get; set; }
+    [SerializeField]
     public static BaseCharacter [] SideCharacters { get; set; }
 
     //Set characters stats

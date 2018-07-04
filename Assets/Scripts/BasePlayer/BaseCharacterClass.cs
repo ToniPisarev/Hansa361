@@ -26,7 +26,5 @@ public class BaseCharacterClass {
     //Getter functions
     public CharacterClasses CharacterClassName { get; set; }
     public string CharacterClassDescription { get; set; }
-    public int Health { get; set; }
-    public int Mana { get; set; }
 
 }

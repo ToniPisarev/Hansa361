@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class CharController : MonoBehaviour {
 
+    public List<Abilities> skills = new List<Abilities>();
     public Animator animator;
     //Text
     public Font myFont;
@@ -111,31 +112,30 @@ public class CharController : MonoBehaviour {
         // Add Abilities
         if ((int)myCharacter.PlayerClass % 4 == 0) {
             // Squire
-            myCharacter.skills.Add(new SpearAttack(c, myCharacter));
-            myCharacter.skills.Add(new HealingLight(c, myCharacter));
-            myCharacter.skills.Add(new SpearAttack(c, myCharacter));
-            myCharacter.skills.Add(new HealingLight(c, myCharacter));
+            skills.Add(new SpearAttack(c, myCharacter));
+            skills.Add(new HealingLight(c, myCharacter));
+            skills.Add(new SpearAttack(c, myCharacter));
+            skills.Add(new HealingLight(c, myCharacter));
             weapon = "Spear";
         } else if ((int)myCharacter.PlayerClass % 4 == 1) {
             // Apprentice
-            myCharacter.skills.Add(new Fireball(c, myCharacter));
-            myCharacter.skills.Add(new Lightning(c, myCharacter));
-            myCharacter.skills.Add(new ArcaneBlast(c, myCharacter));
-            myCharacter.skills.Add(new Sleep(c, myCharacter));
+            skills.Add(new Lightning(c, myCharacter));
+            skills.Add(new ArcaneBlast(c, myCharacter));
+            skills.Add(new Sleep(c, myCharacter));
             weapon = "Spell Book";
         } else if ((int)myCharacter.PlayerClass % 4 == 2) {
             // Thief
-            myCharacter.skills.Add(new Stab(c, myCharacter));
-            myCharacter.skills.Add(new DoubleStab(c, myCharacter));
-            myCharacter.skills.Add(new LegSweep(c, myCharacter));
-            myCharacter.skills.Add(new TwoTurn(c, myCharacter));
+            skills.Add(new Stab(c, myCharacter));
+            skills.Add(new DoubleStab(c, myCharacter));
+            skills.Add(new LegSweep(c, myCharacter));
+            skills.Add(new TwoTurn(c, myCharacter));
             weapon = "Daggers";
         } else if ((int)myCharacter.PlayerClass % 4 == 3) {
             //Archer
-            myCharacter.skills.Add(new Kick(c, myCharacter));
-            myCharacter.skills.Add(new Fog(c, myCharacter));
-            myCharacter.skills.Add(new IceArrow(c, myCharacter));
-            myCharacter.skills.Add(new BladeWind(c, myCharacter));
+            skills.Add(new Kick(c, myCharacter));
+            skills.Add(new Fog(c, myCharacter));
+            skills.Add(new IceArrow(c, myCharacter));
+            skills.Add(new BladeWind(c, myCharacter));
             weapon = "Bow";
         }
 
@@ -196,7 +196,7 @@ public class CharController : MonoBehaviour {
     public void ApplyDamage(int theDamage) {
         //Defense mitigates damage
         if (theDamage > mitigateDamage)
-            Debug.Log("Lost health - " + (int)(theDamage - mitigateDamage));
+            //Debug.Log("Lost health - " + (int)(theDamage - mitigateDamage));
             myCharacter.CurrentHealth -= (int)(theDamage - mitigateDamage);
     }
 
@@ -232,17 +232,17 @@ public class CharController : MonoBehaviour {
         //Decide which attack to use
         for (int j = 0; j < 4; j++) {
             //use attack with max range
-            if (myCharacter.skills[j].maxRange > maxRange) {
-                maxRange = myCharacter.skills[j].maxRange;
-                minRange = myCharacter.skills[j].minRange;
+            if (skills[j].maxRange > maxRange) {
+                maxRange = skills[j].maxRange;
+                minRange = skills[j].minRange;
                 abilityToUse = j;
                 //Debug.Log("Ai is using ability number : " + j);
                 continue;
             }
             System.Random rand = new System.Random();
-            if (myCharacter.skills[j].maxRange == maxRange && rand.Next(0, 100) < 25) {
-                maxRange = myCharacter.skills[j].maxRange;
-                minRange = myCharacter.skills[j].minRange;
+            if (skills[j].maxRange == maxRange && rand.Next(0, 100) < 25) {
+                maxRange = skills[j].maxRange;
+                minRange = skills[j].minRange;
                 abilityToUse = j;
                 //Debug.Log("Ai is using ability number : " + j);
             }
@@ -517,8 +517,8 @@ public class CharController : MonoBehaviour {
 
     }
     private void SkillClicked(int i) {
-        myCharacter.skills[i].updateLoc(gameObject);
-        myCharacter.skills[i].attack();
+        skills[i].updateLoc(gameObject);
+        skills[i].attack();
     }
 
     //Rotate Player--------------------------------------------------------------------------------------------------------------------
