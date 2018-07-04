@@ -18,21 +18,11 @@ public class SaveInformation {
         if (GameInformation.PlayerCharacter != null) {
             PlayerPref.Save("PLAYERCHARACTER", GameInformation.PlayerCharacter);
         }
-        if (GameInformation.Char1 != null) {
-            PlayerPref.Save("CHAR01", GameInformation.Char1);
+        if (GameInformation.SideCharacters != null) {
+            PlayerPref.Save("SIDECHARACTERS", GameInformation.SideCharacters);
         }
-        if (GameInformation.Char2 != null) {
-            PlayerPref.Save("CHAR02", GameInformation.Char2);
-        }
-        if (GameInformation.Char3 != null) {
-            PlayerPref.Save("CHAR03", GameInformation.Char3);
-        }
-        if (GameInformation.Char4 != null) {
-            PlayerPref.Save("CHAR04", GameInformation.Char4);
-        }
-        if (GameInformation.Char5 != null) {
-            PlayerPref.Save("CHAR05", GameInformation.Char5);
-        }
+        
+            
         Debug.Log("SAVED ALL INFO!!");
     }
 }

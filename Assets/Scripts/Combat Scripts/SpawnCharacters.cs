@@ -30,12 +30,6 @@ public class SpawnCharacters : MonoBehaviour {
         enemyList = new BaseCharacter[6];
 
         // For Demo: Generate 4 side characters
-        GameInformation.Char1 = null;
-        GameInformation.Char2 = null;
-        GameInformation.Char3 = null;
-        GameInformation.Char4 = null;
-        GameInformation.Char5 = null;
-
         LoadInformation.LoadAllInformation();
 
         AddNewSideCharacter(CreateNewCharacter(BaseCharacterClass.CharacterClasses.Squire));
@@ -45,11 +39,14 @@ public class SpawnCharacters : MonoBehaviour {
 
         // Get the six friendly chararcter
         friendlyList[0] = GameInformation.PlayerCharacter;
-        friendlyList[1] = GameInformation.Char1;
-        friendlyList[2] = GameInformation.Char2;
-        friendlyList[3] = GameInformation.Char3;
-        friendlyList[4] = GameInformation.Char4;
-        SaveInformation.SaveAllInformation();
+
+        if (GameInformation.SideCharacters != null) {
+            for (int i = 0; i < GameInformation.SideCharacters.Length; i++) {
+                if (GameInformation.SideCharacters[i] != null) {
+                    friendlyList[i+1] = GameInformation.SideCharacters[i];
+                }
+            }
+        }
 
         // Generate some enemies
         for (int i = 0; i < 6; i++) {
@@ -111,18 +108,18 @@ public class SpawnCharacters : MonoBehaviour {
     //Adds side character to game info
     public static void AddNewSideCharacter(BaseCharacter side) {
 
-        if (GameInformation.Char1 == null) {
-            GameInformation.Char1 = side;
-        } else if (GameInformation.Char2 == null) {
-            GameInformation.Char2 = side;
-        } else if (GameInformation.Char3 == null) {
-            GameInformation.Char3 = side;
-        } else if (GameInformation.Char4 == null) {
-            GameInformation.Char4 = side;
-        } else if (GameInformation.Char5 == null) {
-            GameInformation.Char5 = side;
-        } else {
-            Debug.Log("You're party is full!");
+        if(GameInformation.SideCharacters == null) {
+            GameInformation.SideCharacters = new BaseCharacter[5];
+        }
+
+        if(GameInformation.SideCharacters != null) {
+            for (int i = 0; i < GameInformation.SideCharacters.Length; i++) {
+                if (GameInformation.SideCharacters[i] == null) {
+                    side.PlayerName = side.PlayerClass.ToString();
+                    GameInformation.SideCharacters[i] = side;
+                    break;
+                }
+            }
         }
     }
 

@@ -7,35 +7,35 @@ public class LoadInventoryPause : MonoBehaviour {
 
     public GameObject InvContent;
     public GameObject IDP;
+    public GameObject weaponButton;
     private GameObject InvDetailPanel;
 
     // Use this for initialization
     void Start() {
-        InvDetailPanel = IDP;
+        InvDetailPanel = IDP;        
     }
 
-    public void showAllWeapons() {
+    public void ShowAllWeapons() {
+        weaponButton.transform.GetComponent<Button>().Select();
+
         // Destroy all contents first
         List<GameObject> children = new List<GameObject>();
         foreach (Transform child in InvContent.transform) children.Add(child.gameObject);
         children.ForEach(child => Destroy(child));
 
-
         int height = -10;
-
         if (GameInformation.PlayerInventory.Weapons != null) {
             foreach (BaseWeapon w in GameInformation.PlayerInventory.Weapons) {
                 ShowWeapon(w, height);
-
                 height -= 100;
             }
         }
 
-
         RectTransform r = (RectTransform)InvContent.transform;
         r.sizeDelta = new Vector2(0, height * (-1) + 10);
     }
-    public void showAllEquipments() {
+
+    public void ShowAllEquipments() {
         // Destroy all contents first
         List<GameObject> children = new List<GameObject>();
         foreach (Transform child in InvContent.transform) children.Add(child.gameObject);
@@ -44,13 +44,14 @@ public class LoadInventoryPause : MonoBehaviour {
         int height = -10;
         foreach (BaseEquipment e in GameInformation.PlayerInventory.Equipment) {
             ShowEquipment(e, height);
-
             height -= 100;
         }
+
         RectTransform r = (RectTransform)InvContent.transform;
         r.sizeDelta = new Vector2(0, height * (-1) + 10);
     }
-    public void showAllPotions() {
+
+    public void ShowAllPotions() {
         // Destroy all contents first
         List<GameObject> children = new List<GameObject>();
         foreach (Transform child in InvContent.transform) children.Add(child.gameObject);
@@ -59,7 +60,6 @@ public class LoadInventoryPause : MonoBehaviour {
         int height = -10;
         foreach (BasePotion p in GameInformation.PlayerInventory.Potions) {
             ShowPotion(p, height);
-
             height -= 100;
         }
 
@@ -68,64 +68,68 @@ public class LoadInventoryPause : MonoBehaviour {
     }
 
     private void ShowWeapon(BaseWeapon weapon, int height) {
-        GameObject newB = (GameObject)Instantiate(Resources.Load("InventoryButton"));
-        newB.transform.SetParent(InvContent.transform);
-        SetListenerWeapon(newB.GetComponent<Button>(), weapon);
-        RectTransform ButtonRect = (RectTransform)newB.transform;
+        GameObject button = (GameObject)Instantiate(Resources.Load("InventoryButton"));
+        button.transform.SetParent(InvContent.transform);
+        SetListenerWeapon(button.GetComponent<Button>(), weapon);
+
+        RectTransform ButtonRect = (RectTransform)button.transform;
         ButtonRect.anchoredPosition3D = new Vector3(0, height, 0);
         ButtonRect.localScale = new Vector3(1, 1, 1);
-        GameObject Name = newB.transform.GetChild(0).gameObject; // name
-        Text text;
-        text = Name.GetComponent<Text>();
+
+        GameObject Name = button.transform.GetChild(0).gameObject; // name
+        Text text = Name.GetComponent<Text>();
         text.text = weapon.ItemName + "\n" + weapon.ItemRarity;
 
-        Name = newB.transform.GetChild(1).gameObject; // price
+        Name = button.transform.GetChild(1).gameObject; // price
         text = Name.GetComponent<Text>();
         text.text = "Price: $ " + weapon.Price;
 
-        Name = newB.transform.GetChild(2).gameObject; // stats
+        Name = button.transform.GetChild(2).gameObject; // stats
         text = Name.GetComponent<Text>();
         text.text = "Damage: " + weapon.Damage + "\nStrength: " + weapon.Strength + "\nIntellect: " + weapon.Intellect + "\nAgility : " + weapon.Agility + " \nDefense: " + weapon.Defense;
 
     }
+
     private void ShowEquipment(BaseEquipment equip, int height) {
-        GameObject newB = (GameObject)Instantiate(Resources.Load("InventoryButton"));
-        newB.transform.SetParent(InvContent.transform);
-        SetListenerEquipment(newB.GetComponent<Button>(), equip);
-        RectTransform ButtonRect = (RectTransform)newB.transform;
+        GameObject button = (GameObject)Instantiate(Resources.Load("InventoryButton"));
+        button.transform.SetParent(InvContent.transform);
+        SetListenerEquipment(button.GetComponent<Button>(), equip);
+
+        RectTransform ButtonRect = (RectTransform)button.transform;
         ButtonRect.anchoredPosition3D = new Vector3(0, height, 0);
         ButtonRect.localScale = new Vector3(1, 1, 1);
-        GameObject Name = newB.transform.GetChild(0).gameObject; // name
-        Text text;
-        text = Name.GetComponent<Text>();
+
+        GameObject Name = button.transform.GetChild(0).gameObject; // name
+        Text text = Name.GetComponent<Text>();
         text.text = equip.ItemName + "\n" + equip.ItemRarity;
 
-        Name = newB.transform.GetChild(1).gameObject; // price
+        Name = button.transform.GetChild(1).gameObject; // price
         text = Name.GetComponent<Text>();
         text.text = "Price: $ " + equip.Price;
 
-        Name = newB.transform.GetChild(2).gameObject; // stats
+        Name = button.transform.GetChild(2).gameObject; // stats
         text = Name.GetComponent<Text>();
         text.text = "Resistance: " + equip.Resistance + "\nStrength: " + equip.Strength + "\nIntellect: " + equip.Intellect + "\nAgility : " + equip.Agility + " \nDefense: " + equip.Defense;
 
     }
     private void ShowPotion(BasePotion potion, int height) {
-        GameObject newB = (GameObject)Instantiate(Resources.Load("InventoryButton"));
-        newB.transform.SetParent(InvContent.transform);
-        SetListenerPotion(newB.GetComponent<Button>(), potion);
-        RectTransform ButtonRect = (RectTransform)newB.transform;
+        GameObject button = (GameObject)Instantiate(Resources.Load("InventoryButton"));
+        button.transform.SetParent(InvContent.transform);
+        SetListenerPotion(button.GetComponent<Button>(), potion);
+
+        RectTransform ButtonRect = (RectTransform)button.transform;
         ButtonRect.anchoredPosition3D = new Vector3(0, height, 0);
         ButtonRect.localScale = new Vector3(1, 1, 1);
-        GameObject Name = newB.transform.GetChild(0).gameObject; // name
-        Text text;
-        text = Name.GetComponent<Text>();
+
+        GameObject Name = button.transform.GetChild(0).gameObject; // name
+        Text text = Name.GetComponent<Text>();
         text.text = potion.ItemName + "\n" + potion.ItemRarity;
 
-        Name = newB.transform.GetChild(1).gameObject; // price
+        Name = button.transform.GetChild(1).gameObject; // price
         text = Name.GetComponent<Text>();
         text.text = "Price: $ " + potion.Price;
 
-        Name = newB.transform.GetChild(2).gameObject; // stat
+        Name = button.transform.GetChild(2).gameObject; // stat
         text = Name.GetComponent<Text>();
         text.text = "Effectiveness: " + potion.Effectiveness;
 
@@ -276,7 +280,7 @@ public class LoadInventoryPause : MonoBehaviour {
         c.Weapon = w;                                      // equip on c
         GameInformation.PlayerInventory.Weapons.Remove(w); // Remove w from inventory
         InvDetailPanel.SetActive(false);
-        showAllWeapons();
+        ShowAllWeapons();
     }
 
     private void equipEquipmentOnChar(BaseCharacter c, BaseEquipment w) {
@@ -311,22 +315,22 @@ public class LoadInventoryPause : MonoBehaviour {
         }
         GameInformation.PlayerInventory.Equipment.Remove(w); // Remove w from inventory
         InvDetailPanel.SetActive(false);
-        showAllEquipments();
+        ShowAllEquipments();
     }
 
     private void equipWeapon(BaseWeapon w) {   // reload all character information
 
         BaseCharacter[] chars = new BaseCharacter[6];
         chars[0] = GameInformation.PlayerCharacter;
-        chars[1] = GameInformation.Char1;
-        chars[2] = GameInformation.Char2;
-        chars[3] = GameInformation.Char3;
-        chars[4] = GameInformation.Char4;
-        chars[5] = GameInformation.Char5;
+
+        if (GameInformation.SideCharacters != null) {
+            for (int i = 0; i < GameInformation.SideCharacters.Length; i++) {
+                chars[i+1] = GameInformation.SideCharacters[i];
+            }
+        }       
+
         Transform charPanel = InvDetailPanel.transform.GetChild(6).GetChild(1);
         charPanel.gameObject.SetActive(true);
-
-
 
         for (int i = 0; i < 6; i++) {
             if (chars[i] != null) // if a character exists...
@@ -394,15 +398,15 @@ public class LoadInventoryPause : MonoBehaviour {
 
         BaseCharacter[] chars = new BaseCharacter[6];
         chars[0] = GameInformation.PlayerCharacter;
-        chars[1] = GameInformation.Char1;
-        chars[2] = GameInformation.Char2;
-        chars[3] = GameInformation.Char3;
-        chars[4] = GameInformation.Char4;
-        chars[5] = GameInformation.Char5;
+
+        if (GameInformation.SideCharacters != null) {
+            for (int i = 0; i < GameInformation.SideCharacters.Length; i++) {
+                chars[i + 1] = GameInformation.SideCharacters[i];
+            }
+        }
+
         Transform charPanel = InvDetailPanel.transform.GetChild(6).GetChild(1);
         charPanel.gameObject.SetActive(true);
-
-
 
         for (int i = 0; i < 6; i++) {
             if (chars[i] != null) // if a character exists...

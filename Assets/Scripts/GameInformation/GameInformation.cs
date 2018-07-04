@@ -22,11 +22,7 @@ public class GameInformation : MonoBehaviour {
 
     //Store all character info!
     public static BaseCharacter PlayerCharacter { get; set; }
-    public static BaseCharacter Char1 { get; set; }
-    public static BaseCharacter Char2 { get; set; }
-    public static BaseCharacter Char3 { get; set; }
-    public static BaseCharacter Char4 { get; set; }
-    public static BaseCharacter Char5 { get; set; }
+    public static BaseCharacter [] SideCharacters { get; set; }
 
     //Set characters stats
     public static void SetCharacterStats(BaseCharacter character) {

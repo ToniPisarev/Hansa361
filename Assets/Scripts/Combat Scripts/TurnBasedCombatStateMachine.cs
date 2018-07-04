@@ -124,12 +124,11 @@ public class TurnBasedCombatStateMachine : MonoBehaviour {
 
         //Gain XP, check for levelup
         Promote(GameInformation.PlayerCharacter);
-        Promote(GameInformation.Char1);
-        Promote(GameInformation.Char2);
-        Promote(GameInformation.Char3);
-        Promote(GameInformation.Char4);
-        Promote(GameInformation.Char5);
-
+        for(int i = 0; i < GameInformation.SideCharacters.Length; i++) {
+            if (GameInformation.SideCharacters != null) {
+                Promote(GameInformation.SideCharacters[i]);
+            }            
+        }
     }
 
 

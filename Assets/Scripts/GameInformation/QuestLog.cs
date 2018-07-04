@@ -11,12 +11,13 @@ public class QuestLog {
     public Quest ActiveQuest { get; set; }
 
     public void PrintQuest(Quest q) {
-        str = str + "   " + q.QuestName;
+        str = str + "{ (Name-" + q.QuestName + ")(Alliance-" + q.QuestAlliance.KingName + ")(Location-" + q.QuestLocation + ")(Reward-" + q.GoldReward + ") }";
     }
 
     public void PrintAllQuests() {
-        str = "";
+        str = "Quest Log --- ";
         CurrentQuests.ForEach(PrintQuest);
+        Debug.Log(str);
     }
 
 }

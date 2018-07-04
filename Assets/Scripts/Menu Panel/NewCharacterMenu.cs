@@ -43,7 +43,6 @@ public class NewCharacterMenu : MonoBehaviour {
             newCharacter.PlayerLevel = 1;
             newCharacter.PlayerName = playername;
             GameInformation.SetCharacterStats(newCharacter);
-
             newPlayer.PlayerCharacter = newCharacter;
 
             //init inventory
@@ -51,8 +50,7 @@ public class NewCharacterMenu : MonoBehaviour {
                 Weapons = new List<BaseWeapon>(),
                 Equipment = new List<BaseEquipment>(),
                 Potions = new List<BasePotion>()
-            };
-            newPlayer.PlayerInventory.printInventory();
+            };            
 
             //init quest log
             newPlayer.PlayerQuestLog = new QuestLog {
@@ -60,13 +58,10 @@ public class NewCharacterMenu : MonoBehaviour {
                 FinishedQuests = new List<Quest>()
             };
 
-            Debug.Log("Init player and character");
-            Debug.Log("My character has these stats : (Health-" + newCharacter.CurrentHealth + ") (Damage-" + newCharacter.PhysicalDamage + ") (Magic damage-" + newCharacter.MagicDamage + ") (Mitigation-" + newCharacter.MitigatedDamage + ") (Intellect-" + newCharacter.Intellect + ") (Strength-" + newCharacter.Strength + ") (Defense-" + newCharacter.Defense + ") " + newCharacter.PlayerClass);
-
-
+            Debug.Log("Init character -- My character has these stats : (Health-" + newCharacter.CurrentHealth + ") (Damage-" + newCharacter.PhysicalDamage + ") (Magic damage-" + newCharacter.MagicDamage + ") (Mitigation-" + newCharacter.MitigatedDamage + ") (Intellect-" + newCharacter.Intellect + ") (Strength-" + newCharacter.Strength + ") (Defense-" + newCharacter.Defense + ") " + newCharacter.PlayerClass);
             newPlayer.PlayerQuestLog.PrintAllQuests();
-
-            StoreNewPlayerInfo();     
+            newPlayer.PlayerInventory.printInventory();
+            StoreNewPlayerInfo();
 
             // enter game
             newCharacterMenuPanel.SetActive(false);

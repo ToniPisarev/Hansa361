@@ -14,8 +14,6 @@ public class Quest {
         TreasureMapGetArtifact,
         HelpStranger,
         Delivery
-
-
     }
 
     public QuestTypes QuestType { get; set; }
@@ -30,11 +28,9 @@ public class Quest {
     public Area QuestLocation { get; set; }
     public string QuestDescription { get; set; }
 
-
     //Will let the player know the difficulty of the quest with regard to their current level
     //This will also set the levels of the enemies in the quest
     public int RecommendedLevel { get; set; }
-
 
     //set all reward types
     public int GoldReward { get; set; }
@@ -42,8 +38,5 @@ public class Quest {
     public BaseWeapon WeaponReward { get; set; }
     public BaseEquipment EquipmentReward { get; set; }
     public BasePotion PotionReward { get; set; }
-    //Map/Artifact Reward
-
-
 
 }

@@ -23,7 +23,6 @@ public class WorldInformation : MonoBehaviour {
     private static int[] AreaIDs = new int[34] { 1, 32, 19, 29, 14, 16, 23, 7, 28, 2, 3, 4, 5, 11, 12, 15, 17, 18, 20, 22, 24, 27, 30, 31, 33, 34, 21, 6, 8, 9, 10, 13, 25, 26 };
 
     private static string[] KingNames = new string[10] { "Toni", "Dan", "Kimothy III", "Wolfgang", "Alexander", "Vybihal", "Queen Narges", "Trottier", "Tom", "Marty" };
-    //private string url = "http://tomaswolfgang.com/hansa361/GetWorldInformation.php";
 
     public static JsonData AreaData;
     public static List<Area> Areas { get; set; }
@@ -121,23 +120,20 @@ public class WorldInformation : MonoBehaviour {
         SceneManager.LoadScene("MainMap");
     }
 
-    private void InitShopsAndQuests() {
+    public static void InitShopsAndQuests() {
         AvailableQuests = new List<Quest>();
         LoadNewQuests();
-        RenewShopInv();
+        RenewShopInventory();
     }
 
     public static void LoadNewQuests() {
         //Loads new quests for the quest keep
-
         for (int i = 0; i < 3; i++) {
-            //Debug.Log("Initiating quests in world info!");
-            //Debug.Log("Is there a problem with this? " + questCreator.returnQuest().QuestName);
             AvailableQuests.Add(questCreator.ReturnQuest());
         }
     }
 
-    public static void RenewShopInv() {
+    public static void RenewShopInventory() {
         List<BaseWeapon> weaponArr = new List<BaseWeapon>();
         List<BasePotion> potionArr = new List<BasePotion>();
         List<BaseEquipment> equipmentArr = new List<BaseEquipment>();
@@ -151,6 +147,5 @@ public class WorldInformation : MonoBehaviour {
         shopInv.Equipment = equipmentArr;
         shopInv.Potions = potionArr;
         shopInv.Weapons = weaponArr;
-
     }
 }

@@ -421,11 +421,11 @@ public class CharController : MonoBehaviour {
         //Exiting movement phase
         if ((!waitForUserInput && pf.mPath.Count == 0)) {
             animator.SetFloat("Run", 0.0f);
-            exitMovePhase();
+            ExitMovePhase();
         }
     }
     //Exit phases functions--------------------------------------------------------------------------------------------------------------------
-    public void exitMovePhase() {
+    public void ExitMovePhase() {
         //Cant exit untill finished moving
         if (animator.GetFloat("Run") == 2.0f)
             return;
@@ -461,7 +461,7 @@ public class CharController : MonoBehaviour {
             actionBar.transform.GetChild(i).GetComponent<PointerEventsControl>().charControl = this;
         }
     }
-    public void exitAttackPhase() {
+    public void ExitAttackPhase() {
         if (!takeTwoTurns) {
             //Debug.Log("Ending turn");
             myTurn = false;
@@ -504,14 +504,14 @@ public class CharController : MonoBehaviour {
             return;
         if (isMoving) {
             //Debug.Log("Exiting move phase");
-            exitMovePhase();
+            ExitMovePhase();
             return;
         } else if (isTurning) {
             ExitTurningPhase();
             return;
         } else if (isAttacking) {
             //Debug.Log("Exiting attack phase");
-            exitAttackPhase();
+            ExitAttackPhase();
             return;
         }
 
@@ -597,7 +597,7 @@ public class CharController : MonoBehaviour {
                 }
 
                 Debug.Log("AI DECIDES TO USE ABILITY NUMBER " + abilityToUse);
-                exitAttackPhase();
+                ExitAttackPhase();
 
             }
 
@@ -695,7 +695,7 @@ public class CharController : MonoBehaviour {
                 startTime = Time.time;
             }
             if (Time.time - startTime > 5) {
-                exitAttackPhase();
+                ExitAttackPhase();
             }
 
         }

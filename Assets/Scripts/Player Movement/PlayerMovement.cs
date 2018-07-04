@@ -13,9 +13,6 @@ public class PlayerMovement : MonoBehaviour {
     private string pathID;
 
     int rand;
-    int travelling = 0;
-    int searching = 0;
-    int speed = 5;
     int edgeFinder = 0;
 
     private GameObject Player;
@@ -41,17 +38,15 @@ public class PlayerMovement : MonoBehaviour {
         GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
 
     }
+
     void OnMouseOver() {
         if (Input.GetMouseButtonDown(0)) {
             PathTravel();
         }
     }
 
-    // Update is called once per frame
-
-
     private void PathTravel() {
-        //Debug.Log("I'm travelling!111");
+
         if (String.Compare(WorldInformation.CurrentArea, ID) != 0) {
 
             GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Travelling;
@@ -59,7 +54,7 @@ public class PlayerMovement : MonoBehaviour {
             GameObject v;
             int tempID = 50;
             float tempDist = 1000f;
-            //Debug.Log("Your current area:  " + WorldInformation.CurrentArea);
+            Debug.Log("Your current area:  " + WorldInformation.CurrentArea);
             while (edgeFinder < 5 && WorldInformation.Edges[Int32.Parse(WorldInformation.CurrentArea) - 1, edgeFinder] != 0) {
                 //Debug.Log("Just saw that you have an edge to " + WorldInformation.Edges[Int32.Parse(WorldInformation.CurrentArea) - 1, edgeFinder]);
                 v = GameObject.Find(WorldInformation.Edges[Int32.Parse(WorldInformation.CurrentArea) - 1, edgeFinder] + "");
@@ -72,7 +67,7 @@ public class PlayerMovement : MonoBehaviour {
                 edgeFinder++;
             }
             rand = WorldInformation.rnd.Next(0, 11);
-            Debug.Log(rand + " IS YOUR RANDOM ENCOUNTER number");
+            Debug.Log(rand + " random encounter number");
             if (rand < 3) {
                 //Scene Switch! with GameInformation.PlayerCharacter.PlayerLevel    Random encounter
                 Quest randomBatteQuest = newQuest.ReturnQuest();
@@ -89,20 +84,14 @@ public class PlayerMovement : MonoBehaviour {
                 } else {
                     SceneManager.LoadScene("Combat2");
                 }
-
-
-                Debug.Log("BATTLE!!!!!!! :D");
             } else {
                 travel(WorldInformation.CurrentArea, tempID + "");
             }
             GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
-            //}
         } else {
-            // Debug.Log("YOU'VE ARRIVED AT YOU DESTINATION!!!!");
             MapHud.LoadAreaOptions(ShopButton, HudContent, AreaText, DecisionPanel);
         }
     }
-
 
     private void travel(string A, string B) {
 
@@ -112,30 +101,23 @@ public class PlayerMovement : MonoBehaviour {
         if (curr != dest) {
             if (curr < dest) {
 
-                //Debug.Log("test!");
                 pathID = A + "to" + B;
                 //Debug.Log("Your pathID :" + pathID);
 
                 iTween.MoveTo(Player, iTween.Hash("path", iTweenPath.GetPath(pathID), "time", 2, "orienttopath", true, "easetype", iTween.EaseType.linear, "oncompletetarget", gameObject, "onComplete", "PathTravel"));
                 WorldInformation.CurrentArea = B;
                 //Debug.Log("The new current ID: " + WorldInformation.CurrentArea);
-                //Player.transform.position = GameObject.Find(B).transform.position;
+
             } else {
-                //travelling = 1;
-                //Debug.Log("test!");
+
                 pathID = B + "to" + A;
                 //Debug.Log("Your pathID :" + pathID);
                 iTween.MoveTo(Player, iTween.Hash("path", iTweenPath.GetPathReversed(pathID), "time", 2, "orienttopath", true, "easetype", iTween.EaseType.linear, "oncompletetarget", gameObject, "onComplete", "PathTravel"));
                 WorldInformation.CurrentArea = B;
                 //Debug.Log("The new current ID: " + WorldInformation.CurrentArea);
-                //Player.transform.position = GameObject.Find(B).transform.position;
             }
-            //travelling = 0;
         }
-
     }
-
-
 }
 
 

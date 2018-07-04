@@ -98,7 +98,7 @@ namespace LevelEditor
 
                     tile.Entity = entity;
 
-                    EditorUtility.SetSelectedWireframeHidden(entity.GetComponent<Renderer>(), true);
+                    EditorUtility.SetSelectedRenderState(entity.GetComponent<Renderer>(), EditorSelectedRenderState.Hidden);
                 }
             }
         }

@@ -24,8 +24,9 @@ public class LoginMenu : MonoBehaviour {
             loginMenuPanel.SetActive(false);
             loggedinUsername.SetActive(true);
             loggedinUsername.GetComponent<Text>().text = "Welcome " + GameInformation.PlayerCharacter.PlayerName + "!";
-            Debug.Log("Loading previous player data");
-            Debug.Log("My character has these stats : (Health-" + GameInformation.PlayerCharacter.Health + ") (Damage-" + GameInformation.PlayerCharacter.PhysicalDamage + ") (Magic damage-" + GameInformation.PlayerCharacter.MagicDamage + ") (Mitigation-" + GameInformation.PlayerCharacter.MitigatedDamage + ") (Intellect-" + GameInformation.PlayerCharacter.Intellect + ") (Strength-" + GameInformation.PlayerCharacter.Strength + ") (Defense-" + GameInformation.PlayerCharacter.Defense + ")");
+            Debug.Log("Loading previous character - My character has these stats : (Health-" + GameInformation.PlayerCharacter.Health + ") (Damage-" + GameInformation.PlayerCharacter.PhysicalDamage + ") (Magic damage-" + GameInformation.PlayerCharacter.MagicDamage + ") (Mitigation-" + GameInformation.PlayerCharacter.MitigatedDamage + ") (Intellect-" + GameInformation.PlayerCharacter.Intellect + ") (Strength-" + GameInformation.PlayerCharacter.Strength + ") (Defense-" + GameInformation.PlayerCharacter.Defense + ")");
+            GameInformation.PlayerQuestLog.PrintAllQuests();
+            GameInformation.PlayerInventory.printInventory();
 
             ErrorWindow.ShowErrorWindow("Logging In");
             GameObject.Find("/GameInformation").GetComponent<WorldInformation>().StartWorld();

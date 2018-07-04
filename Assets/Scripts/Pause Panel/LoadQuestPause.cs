@@ -6,9 +6,10 @@ using System.Collections.Generic;
 public class LoadQuestPause : MonoBehaviour {
     public GameObject QstContent;
     public GameObject QuestDetailPanel;
+    public GameObject currentQuestButton;
 
-    public void showAllCurrentQuests()
-    {
+    public void ShowAllCurrentQuests() {
+        currentQuestButton.transform.GetComponent<Button>().Select();
         // Destroy all contents first
         List<GameObject> children = new List<GameObject>();
         foreach (Transform child in QstContent.transform) children.Add(child.gameObject);
@@ -16,9 +17,8 @@ public class LoadQuestPause : MonoBehaviour {
 
 
         int height = -10;
-        
-        foreach (Quest q in GameInformation.PlayerQuestLog.CurrentQuests)
-        {
+
+        foreach (Quest q in GameInformation.PlayerQuestLog.CurrentQuests) {
             ShowQuest(q, height, false);
 
             height -= 100;
@@ -26,16 +26,14 @@ public class LoadQuestPause : MonoBehaviour {
         RectTransform r = (RectTransform)QstContent.transform;
         r.sizeDelta = new Vector2(0, height * (-1) + 10);
     }
-    public void showAllFinishedQuests()
-    {
+    public void ShowAllFinishedQuests() {
         // Destroy all contents first
         List<GameObject> children = new List<GameObject>();
         foreach (Transform child in QstContent.transform) children.Add(child.gameObject);
         children.ForEach(child => Destroy(child));
 
         int height = -10;
-        foreach (Quest q in GameInformation.PlayerQuestLog.FinishedQuests)
-        {
+        foreach (Quest q in GameInformation.PlayerQuestLog.FinishedQuests) {
             ShowQuest(q, height, true);
 
             height -= 100;
@@ -45,8 +43,7 @@ public class LoadQuestPause : MonoBehaviour {
         r.sizeDelta = new Vector2(0, height * (-1) + 10);
     }
 
-    private void ShowQuest (Quest q, int height, bool isCompleted)
-    {
+    private void ShowQuest(Quest q, int height, bool isCompleted) {
         GameObject newB = (GameObject)Instantiate(Resources.Load("QuestMenuButton"));
         newB.transform.SetParent(QstContent.transform);
         SetListener(newB.GetComponent<Button>(), q, isCompleted);
@@ -74,8 +71,7 @@ public class LoadQuestPause : MonoBehaviour {
         Name = newB.transform.GetChild(4).gameObject; // to-do
         text = Name.GetComponent<Text>();
         string s = "";
-        switch(q.QuestType)
-        {
+        switch (q.QuestType) {
             case Quest.QuestTypes.CaravanProtect:
                 s = "Protect Caravan";
                 break;
@@ -96,15 +92,11 @@ public class LoadQuestPause : MonoBehaviour {
         text.text = s + "\nRecommended: Lv." + q.RecommendedLevel;
     }
 
-    private void SetListener(Button B, Quest q, bool isCompleted)
-    {
-
-        B.onClick.AddListener(delegate { showQuestDetail(q, isCompleted); });
-
+    private void SetListener(Button B, Quest q, bool isCompleted) {
+        B.onClick.AddListener(delegate { ShowQuestDetail(q, isCompleted); });
     }
 
-    private void showQuestDetail(Quest q, bool isCompleted)
-    {
+    private void ShowQuestDetail(Quest q, bool isCompleted) {
         QuestDetailPanel.transform.GetChild(0).gameObject.GetComponent<Text>().text = q.QuestName;
         QuestDetailPanel.transform.GetChild(1).gameObject.GetComponent<Text>().text = "Alliance: " + q.QuestAlliance.KingName;
         if (q.QuestEnemy != null) QuestDetailPanel.transform.GetChild(2).gameObject.GetComponent<Text>().text = "Enemy: " + q.QuestEnemy.KingName;
@@ -116,8 +108,7 @@ public class LoadQuestPause : MonoBehaviour {
         if (q.WeaponReward != null) r.text += "\n" + q.WeaponReward.ItemName;
         QuestDetailPanel.transform.GetChild(4).gameObject.GetComponent<Text>().text = q.QuestDescription;
         string s = "";
-        switch (q.QuestType)
-        {
+        switch (q.QuestType) {
             case Quest.QuestTypes.CaravanProtect:
                 s = "Protect Caravan";
                 break;
