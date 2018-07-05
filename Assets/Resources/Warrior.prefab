@@ -2474,7 +2474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 9504916}
-  myFont: {fileID: 0}
+  myFont: {fileID: 12800000, guid: b51a3e520f9164da198dc59c8acfccd6, type: 3}
   duration: 1
   isSleep: 0
   takeTwoTurns: 0
@@ -2482,10 +2482,6 @@ MonoBehaviour:
   myTurn: 0
   isFriendly: 0
   showLabel5: 0
-  myPhysicalDamage: 0
-  myMagicDamage: 0
-  mitigateDamage: 0
-  weapon: 
 --- !u!136 &13603914
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -3390,11 +3386,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 0}
-  deathCount: 0
-  enemyDeathCount: 0
   numEnemies: 0
   numFriendly: 0
   isEnemy: 0
+  updateHealthBar: 0
 --- !u!136 &136835727126967906
 CapsuleCollider:
   m_ObjectHideFlags: 1

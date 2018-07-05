@@ -14,8 +14,6 @@ public class EscMenu : MonoBehaviour {
 
     private bool isPaused; //Boolean to check if the game is paused or not
 
-    private BlurOptimized blur; // reference to bluroptimized
-
     // reference to menu panels
     public GameObject charactersPanel;
     public GameObject inventoryPanel;
@@ -39,19 +37,13 @@ public class EscMenu : MonoBehaviour {
 
     public GameObject mainCamera;
 
-    //Awake is called before Start()
-    void Awake() {
-        //Get a component reference to bluroptimized attached to this object
-        blur = mainCamera.GetComponent<BlurOptimized>();
-    }
-
     void Start() {
         isPaused = false;
     }
 
     // Press Esc to pause/unpause
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
+        if (Input.GetKeyDown(KeyCode.U)) {
             if (isPaused) {
                 UnPause();
             } else {
@@ -62,7 +54,7 @@ public class EscMenu : MonoBehaviour {
 
     // function to control tab buttons' behaivour - pass parameter within OnClick() within each button
     // 1 = characters, 2 = inventory, 3 = quest, 4 = game
-    public void tabButtonPressed(int panelToGo) {
+    public void TabButtonPressed(int panelToGo) {
 
         // first hide all panels
         charactersPanel.SetActive(false);
@@ -74,32 +66,29 @@ public class EscMenu : MonoBehaviour {
         inventoryDetailPanel.SetActive(false);
 
         // show panel according to panelToGo parameter
-        switch (panelToGo) 
-        {
+        switch (panelToGo) {
             case 1:
                 charactersPanel.SetActive(true);
-                reloadCharInfo();
+                ReloadCharInfo();
                 break;
             case 2: inventoryPanel.SetActive(true); break;
             case 3: questPanel.SetActive(true); break;
             case 4: gamePanel.SetActive(true); break;
         }
-
-
     }
 
-    public void reloadCharInfo() {
+    public void ReloadCharInfo() {
         // reload all character information
 
         BaseCharacter[] chars = new BaseCharacter[6];
         chars[0] = GameInformation.PlayerCharacter;
-        if(GameInformation.SideCharacters != null) {
+        if (GameInformation.SideCharacters != null) {
             for (int i = 0; i < GameInformation.SideCharacters.Length; i++) {
                 if (GameInformation.SideCharacters[i] != null) {
-                    chars[i+1] = GameInformation.SideCharacters[i];
+                    chars[i + 1] = GameInformation.SideCharacters[i];
                 }
             }
-        }             
+        }
 
         GameObject[] charInfoButtons = new GameObject[6];
         charInfoButtons[0] = characterInfoButton1;
@@ -114,7 +103,7 @@ public class EscMenu : MonoBehaviour {
             {
                 charInfoButtons[i].GetComponent<Button>().interactable = true; // enable button
                 BaseCharacter bc = chars[i];
-                charInfoButtons[i].GetComponent<Button>().onClick.AddListener(delegate { showCharDetailPanel(bc); });
+                charInfoButtons[i].GetComponent<Button>().onClick.AddListener(delegate { ShowCharDetailPanel(bc); });
                 charInfoButtons[i].transform.GetChild(1).gameObject.SetActive(true);
                 charInfoButtons[i].transform.GetChild(2).gameObject.SetActive(true);
                 charInfoButtons[i].transform.GetChild(3).gameObject.SetActive(true);
@@ -168,18 +157,17 @@ public class EscMenu : MonoBehaviour {
         }
     }
 
-    public void reloadGoldUsername() {
+    public void ReloadGoldUsername() {
         Text goldtext = goldUsername.GetComponent<Text>();
         goldtext.text = "$ " + GameInformation.Gold + "\n" + DateTime.Now.ToString("yyyy-MM-dd HH:mm");
     }
 
-    public void reloadInventory() {
+    public void ReloadInventory() {
         GameObject ItemB = (GameObject)Instantiate(Resources.Load("InventoryButton"));
         ItemB.transform.SetParent(inventoryContent.transform);
     }
 
-
-    private void showCharDetailPanel(BaseCharacter c) {
+    private void ShowCharDetailPanel(BaseCharacter c) {
         charDetailPanel.SetActive(true);
         // Level of player character
         Text charlvl = charDetailPanel.transform.GetChild(1).GetChild(0).gameObject.GetComponent<Text>();
@@ -204,7 +192,7 @@ public class EscMenu : MonoBehaviour {
         // Intellect
         Text charint = charDetailPanel.transform.GetChild(1).GetChild(3).GetChild(7).gameObject.GetComponent<Text>();
         charint.text = c.Intellect.ToString();
-        // Health - MAX HEALTH = 100
+        // Health
         RectTransform charhp = charDetailPanel.transform.GetChild(2).GetChild(1).gameObject.GetComponent<RectTransform>();
         charDetailPanel.transform.GetChild(2).GetChild(2).gameObject.GetComponent<Text>().text = c.CurrentHealth + "/" + c.Health;
         charhp.sizeDelta = new Vector2(c.CurrentHealth * 390 / c.Health, 15);
@@ -259,10 +247,8 @@ public class EscMenu : MonoBehaviour {
                     break;
             }
 
-
-
-        } else // no weapon
-        {
+        } else {
+            // no weapon
             B.gameObject.GetComponent<Button>().interactable = false;
             B.GetChild(0).gameObject.SetActive(false);
         }
@@ -360,7 +346,7 @@ public class EscMenu : MonoBehaviour {
         inventoryDetailPanel.transform.GetChild(1).gameObject.GetComponent<Text>().text = p.ItemName + "\n" + p.ItemRarity;
         inventoryDetailPanel.transform.GetChild(2).gameObject.GetComponent<Text>().text = "Price: $ " + p.Price;
         inventoryDetailPanel.transform.GetChild(3).gameObject.GetComponent<Text>().text = p.ItemDescription;
-        inventoryDetailPanel.transform.GetChild(4).gameObject.GetComponent<Text>().text = "Damage: " + p.Value + "\nStrength: " + p.Strength + "\nIntellect: " + p.Intellect + "\nAgility : " + p.Agility + " \nDefense: " + p.Defense;
+        inventoryDetailPanel.transform.GetChild(4).gameObject.GetComponent<Text>().text = "\nStrength: " + p.Strength + "\nIntellect: " + p.Intellect + "\nAgility : " + p.Agility + " \nDefense: " + p.Defense;
 
         inventoryDetailPanel.SetActive(true);
         GameObject equipButton = inventoryDetailPanel.transform.GetChild(6).gameObject;
@@ -388,7 +374,7 @@ public class EscMenu : MonoBehaviour {
         inventoryDetailPanel.transform.GetChild(1).gameObject.GetComponent<Text>().text = e.ItemName + "\n" + e.ItemRarity;
         inventoryDetailPanel.transform.GetChild(2).gameObject.GetComponent<Text>().text = "Price: $ " + e.Price;
         inventoryDetailPanel.transform.GetChild(3).gameObject.GetComponent<Text>().text = e.ItemDescription;
-        inventoryDetailPanel.transform.GetChild(4).gameObject.GetComponent<Text>().text = "Resistance: " + e.Value + "\nStrength: " + e.Strength + "\nIntellect: " + e.Intellect + "\nAgility : " + e.Agility + " \nDefense: " + e.Defense;
+        inventoryDetailPanel.transform.GetChild(4).gameObject.GetComponent<Text>().text = "\nStrength: " + e.Strength + "\nIntellect: " + e.Intellect + "\nAgility : " + e.Agility + " \nDefense: " + e.Defense;
 
         inventoryDetailPanel.SetActive(true);
         GameObject equipButton = inventoryDetailPanel.transform.GetChild(6).gameObject;
@@ -396,29 +382,31 @@ public class EscMenu : MonoBehaviour {
     }
 
     public void DoPause() {
-        //Set isPaused to true
-        isPaused = true;
-        //Set time.timescale to 0, this will cause animations and physics to stop updating
-        Time.timeScale = 0;
 
-        blur.enabled = true;
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        mainCamera.GetComponent<MouseLook>().inGame = false;
+        mainCamera.GetComponent<BlurOptimized>().enabled = true;
+
+        isPaused = true;
+        Time.timeScale = 0; //Set time.timescale to 0, this will cause animations and physics to stop updating
+        
         pauseMenuPanel.SetActive(true);
         charactersPanel.SetActive(true);
         areaname.SetActive(false);
         mainScroll.SetActive(false);
-        reloadCharInfo(); reloadGoldUsername();
+        ReloadCharInfo();
+        ReloadGoldUsername();
     }
 
+    public void UnPause() {       
 
-    public void UnPause() {
         SaveInformation.SaveAllInformation();
-        
-        //Set isPaused to false
-        isPaused = false;
-        //Set time.timescale to 1, this will cause animations and physics to continue updating at regular speed
-        Time.timeScale = 1;
 
-        blur.enabled = false;
+        mainCamera.GetComponent<MouseLook>().inGame = true;
+        mainCamera.GetComponent<BlurOptimized>().enabled = false;
+
+        Time.timeScale = 1; //Set time.timescale to 1, this will cause animations and physics to continue updating at regular speed        
+
         // first hide all panels
         charactersPanel.SetActive(false);
         inventoryPanel.SetActive(false);
@@ -428,9 +416,9 @@ public class EscMenu : MonoBehaviour {
         questDetailPanel.SetActive(false);
         inventoryDetailPanel.SetActive(false);
         pauseMenuPanel.SetActive(false);
-
         areaname.SetActive(true);
         mainScroll.SetActive(true);
+        isPaused = false;
     }
 
 

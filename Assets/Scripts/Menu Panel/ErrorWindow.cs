@@ -9,5 +9,4 @@ public class ErrorWindow : MonoBehaviour {
         errorWindow.SetActive(true);
         errorWindow.transform.GetChild(1).GetComponent<Text>().text = errorMsg;
     }
-
 }

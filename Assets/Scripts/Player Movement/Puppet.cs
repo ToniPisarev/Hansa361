@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+/*
 public class Puppet : MonoBehaviour {
     public Transform character;
     
@@ -30,4 +30,4 @@ public class Puppet : MonoBehaviour {
             character.position = hit.point;
         }
     }
-}
+}*/

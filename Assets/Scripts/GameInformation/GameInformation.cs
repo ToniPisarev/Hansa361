@@ -7,14 +7,6 @@ public class GameInformation : MonoBehaviour {
         DontDestroyOnLoad(transform.gameObject);
     }
 
-    public enum PlayerMapStates {
-        Travelling,
-        Idle
-    }
-
-    //The players status in the world
-    public static PlayerMapStates PlayerMapState { get; set; }
-
     //Store player important data
     public static int Gold { get; set; }
     public static Inventory PlayerInventory { get; set; }

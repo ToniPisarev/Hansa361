@@ -7,7 +7,6 @@ using System;
 
 public class NewWorldMenu : MonoBehaviour {
 
-    public int sceneToStart = 1; //Index number in build settings of scene to load
     public int kingdomsizeValue = 4;
 
     public GameObject kingdomText;

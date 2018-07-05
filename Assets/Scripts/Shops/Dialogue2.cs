@@ -24,8 +24,6 @@ public class Dialogue2 : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        StateManager.ShopState = StateManager.ShopStates.OUTSIDE;
-
         textComponent = text.GetComponent<Text>();
         textComponent.text = "";
         HideIcons();
@@ -41,47 +39,38 @@ public class Dialogue2 : MonoBehaviour {
 
         isEndOfDialogue = false;
         if (!isEndOfDialogue) {
-            textComponent.text = "";
             StartCoroutine(DisplayString(DialogueStrings[0]));
         }
     }
 
-
     public void InitShopkeep() {
-        if (StateManager.ShopState == StateManager.ShopStates.OUTSIDE) {
+        HideIcons();
 
-            StateManager.ShopState = StateManager.ShopStates.QUEST;
-            HideIcons();
+        if (init) {
+            DialogueStrings[0] = "Thought a bit more about my offers?";
+            DialogueStrings[1] = "It's good pay for good work";
+        }
 
-            if (init) {
-                DialogueStrings[0] = "Thought a bit more about my offers?";
-                DialogueStrings[1] = "It's good pay for good work";
-            }
+        textComponent.text = "";
+        init = true;
+        isEndOfDialogue = false;
+        shopKeep.SetActive(false);
+        questPanel.SetActive(true);
 
-            textComponent.text = "";
-            init = true;
-            isEndOfDialogue = false;
-            shopKeep.SetActive(false);
-            questPanel.SetActive(true);
-
-            if (!isEndOfDialogue) {
-                textComponent.text = "";
-                StartCoroutine(DisplayString(DialogueStrings[0]));
-            }
+        if (!isEndOfDialogue) {
+            StartCoroutine(DisplayString(DialogueStrings[0]));
         }
     }
 
     public void CloseShopkeep() {
         leaveShop.SetActive(true);
         shopKeep.SetActive(true);
-        StateManager.ShopState = StateManager.ShopStates.OUTSIDE;
         questPanel.SetActive(false);
     }
 
     private IEnumerator DisplayString(string StringToDisplay) {
         int stringLength = StringToDisplay.Length;
         int currentCharIndex = 0;
-        textComponent.text = "";
 
         while (currentCharIndex < stringLength) {
             textComponent.text += StringToDisplay[currentCharIndex];
@@ -92,7 +81,6 @@ public class Dialogue2 : MonoBehaviour {
                     textComponent.text = StringToDisplay;
                     isEndOfDialogue = true;
                     break;
-                    //yield return new WaitForSeconds(SecondsBetweenChars * CharRateMultiplier);
                 } else {
                     yield return new WaitForSeconds(SecondsBetweenChars);
                 }

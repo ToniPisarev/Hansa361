@@ -153,7 +153,7 @@ public class TurnBasedCombatStateMachine : MonoBehaviour {
 
             if (character.CurrentXP >= character.RequiredXP) {
                 character.PlayerLevel++;
-                character.CurrentXP = 0;
+                character.CurrentXP = 0;                
                 character.AvailableStatPoints++;
 
                 // save old stats for GUI display
@@ -173,6 +173,7 @@ public class TurnBasedCombatStateMachine : MonoBehaviour {
                 character.Intellect += tier;
                 character.Strength += tier;
                 character.Health += tier * 20;
+                character.RequiredXP += tier * 20;
 
                 //extra increase based on class
                 if ((int)character.PlayerClass % 4 == 0) {
@@ -219,7 +220,7 @@ public class TurnBasedCombatStateMachine : MonoBehaviour {
 
                 Transform players = transform.GetChild(0);
                 for (int i = 0; i < players.childCount; i++) {
-                    CharController currentPlayer = players.GetChild(i).GetComponent<CharController>();
+                    PlayerController currentPlayer = players.GetChild(i).GetComponent<PlayerController>();
 
                     if (currentPlayer.myTurn) {
                         //Debug.Log("Waiting for player " + i);
@@ -233,7 +234,7 @@ public class TurnBasedCombatStateMachine : MonoBehaviour {
                     }
                 }
 
-                if (turnNumber == players.childCount && !players.GetChild(turnNumber - 1).GetComponent<CharController>().myTurn) {
+                if (turnNumber == players.childCount && !players.GetChild(turnNumber - 1).GetComponent<PlayerController>().myTurn) {
                     turnNumber = 0;
                     currentState = BattleStates.ENEMYCHOICE;
                 }
@@ -245,7 +246,7 @@ public class TurnBasedCombatStateMachine : MonoBehaviour {
                 //Need Artificial intelligence here
                 Transform enemies = transform.GetChild(1);
                 for (int i = 0; i < enemies.childCount; i++) {
-                    CharController currentPlayer = enemies.GetChild(i).GetComponent<CharController>();
+                    PlayerController currentPlayer = enemies.GetChild(i).GetComponent<PlayerController>();
                     if (currentPlayer.myTurn)
                         break; //Dont Continue untill this players turn is over.
                     if (!currentPlayer.myTurn && turnNumber == i) {
@@ -255,7 +256,7 @@ public class TurnBasedCombatStateMachine : MonoBehaviour {
                     }
                 }
 
-                if (turnNumber == enemies.childCount && !enemies.GetChild(turnNumber - 1).GetComponent<CharController>().myTurn) {
+                if (turnNumber == enemies.childCount && !enemies.GetChild(turnNumber - 1).GetComponent<PlayerController>().myTurn) {
                     turnNumber = 0;
                     currentState = BattleStates.PLAYERCHOICE;
                 }

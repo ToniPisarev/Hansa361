@@ -23,8 +23,6 @@ public class Dialogue1 : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        StateManager.ShopState = StateManager.ShopStates.OUTSIDE;
-
         textComponent = text.GetComponent<Text>();
         textComponent.text = "";
         HideIcons();
@@ -47,34 +45,26 @@ public class Dialogue1 : MonoBehaviour {
     }
 
     public void InitShopkeep() {
+        HideIcons();
+        if (init) {
+            DialogueStrings[0] = "Back for more?";
+            DialogueStrings[1] = "Obviously you couldn't resist my quality wares";
+            DialogueStrings[2] = "What else can I help you with?";
+        }
 
-        if (StateManager.ShopState == StateManager.ShopStates.OUTSIDE) {
+        textComponent.text = "";
+        init = true;
+        questKeep.SetActive(false);
 
-            StateManager.ShopState = StateManager.ShopStates.SHOP;
+        isEndOfDialogue = false;
+        shopPanel.SetActive(true);
 
-            HideIcons();
-            if (init) {
-                DialogueStrings[0] = "Back for more?";
-                DialogueStrings[1] = "Obviously you couldn't resist my quality wares";
-                DialogueStrings[2] = "What else can I help you with?";
-            }
-
-            textComponent.text = "";
-            init = true;
-            questKeep.SetActive(false);
-
-            isEndOfDialogue = false;
-            shopPanel.SetActive(true);
-
-            if (!isEndOfDialogue) {
-                textComponent.text = "";
-                StartCoroutine(DisplayString(DialogueStrings[0]));
-            }
+        if (!isEndOfDialogue) {
+            StartCoroutine(DisplayString(DialogueStrings[0]));
         }
     }
 
     public void CloseShopkeep() {
-        StateManager.ShopState = StateManager.ShopStates.OUTSIDE;
         shopPanel.SetActive(false);
         questKeep.SetActive(true);
         LeaveShop.SetActive(true);
@@ -83,7 +73,6 @@ public class Dialogue1 : MonoBehaviour {
     private IEnumerator DisplayString(string StringToDisplay) {
         int stringLength = StringToDisplay.Length;
         int currentCharIndex = 0;
-        textComponent.text = "";
 
         while (currentCharIndex < stringLength) {
             textComponent.text += StringToDisplay[currentCharIndex];

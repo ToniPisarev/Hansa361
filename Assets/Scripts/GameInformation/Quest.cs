@@ -17,20 +17,12 @@ public class Quest {
     }
 
     public QuestTypes QuestType { get; set; }
-
-    //Determines who the player will gain influence/reputation with
-    public Kingdom QuestAlliance { get; set; }
-
-    //Determines who the player will lose influence/reputation with
-    public Kingdom QuestEnemy { get; set; }
-
-    public string QuestName { get; set; }
     public Area QuestLocation { get; set; }
-    public string QuestDescription { get; set; }
-
-    //Will let the player know the difficulty of the quest with regard to their current level
-    //This will also set the levels of the enemies in the quest
-    public int RecommendedLevel { get; set; }
+    public Kingdom QuestAlliance { get; set; } //Determines who the player will gain influence/reputation with
+    public Kingdom QuestEnemy { get; set; } //Determines who the player will lose influence/reputation with
+    public string QuestName { get; set; }   
+    public string QuestDescription { get; set; }    
+    public int RecommendedLevel { get; set; } //Will let the player know the difficulty of the quest with regard to their current level
 
     //set all reward types
     public int GoldReward { get; set; }

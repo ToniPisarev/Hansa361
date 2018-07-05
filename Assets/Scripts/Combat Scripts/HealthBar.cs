@@ -7,7 +7,7 @@ public class HealthBar : MonoBehaviour {
 
 
     private BaseCharacter myCharacter;
-    private CharController charControl;
+    private PlayerController charControl;
     private Image hp;
     private Transform friendly;
     private Transform enemy;
@@ -47,8 +47,8 @@ public class HealthBar : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (updateHealthBar) {
-            charControl = transform.parent.GetComponent<CharController>();
-            myCharacter = transform.parent.GetComponent<CharController>().myCharacter;
+            charControl = transform.parent.GetComponent<PlayerController>();
+            myCharacter = transform.parent.GetComponent<PlayerController>().myCharacter;
             Vector3 position = Camera.main.WorldToScreenPoint(transform.position);
 
             if (healthBar != null) {
@@ -60,8 +60,8 @@ public class HealthBar : MonoBehaviour {
                 updateHealthBar = false;
             }
 
-            if (myCharacter.CurrentHealth <= 0 && charControl.isDead == false) {
-                charControl.isDead = true;
+            if (myCharacter.CurrentHealth <= 0 && charControl.IsDead == false) {
+                charControl.IsDead = true;
                 updateHealthBar = false;
 
                 if (isEnemy) {

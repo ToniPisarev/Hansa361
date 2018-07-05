@@ -15,6 +15,7 @@ public class GetStoreInventory : MonoBehaviour {
     public GameObject buyButton;
     public GameObject sellButton;
     public GameObject shopKeepPanel;
+    public GameObject errorWindow;
 
     private int height;
     private int index = 0;
@@ -149,6 +150,7 @@ public class GetStoreInventory : MonoBehaviour {
         text.text = "\nStrength: " + equip.Strength + "\nIntellect: " + equip.Intellect + "\nAgility : " + equip.Agility + " \nDefense: " + equip.Defense;
 
     }
+
     public void ShowPotionInStore(BasePotion potion) {
         GameObject button = (GameObject)Instantiate(Resources.Load("WeaponButton"));
         button.transform.SetParent(shopContent.transform);
@@ -195,37 +197,43 @@ public class GetStoreInventory : MonoBehaviour {
         if (itemIndex < TargetInv.Weapons.Count) {
             BaseWeapon BoughtItem = TargetInv.Weapons[itemIndex];
             if (option.Equals("bought") && GameInformation.Gold >= BoughtItem.Price || option.Equals("sold")) {
-                Debug.Log("You just " + option + ": " + BoughtItem.ItemName);
+                ShowErrorWindow("You just " + option + " " + BoughtItem.ItemName, errorWindow);
                 GameInformation.Gold = GameInformation.Gold - BoughtItem.Price * price;
                 OtherInv.Weapons.Add(BoughtItem);
                 TargetInv.Weapons.Remove(BoughtItem);
+            } else {
+                ShowErrorWindow("Bad purchase!\nYou probably dont have enough gold!", errorWindow);
             }
 
         } else if (itemIndex - TargetInv.Weapons.Count < TargetInv.Equipment.Count) {
             BaseEquipment BoughtItem = TargetInv.Equipment[itemIndex - TargetInv.Weapons.Count];
             if (option.Equals("bought") && GameInformation.Gold >= BoughtItem.Price || option.Equals("sold")) {
-                Debug.Log("You just " + option + ": " + BoughtItem.ItemName);
+                ShowErrorWindow("You just " + option + " "  + BoughtItem.ItemName, errorWindow);
                 GameInformation.Gold = GameInformation.Gold - BoughtItem.Price * price;
                 OtherInv.Equipment.Add(BoughtItem);
                 TargetInv.Equipment.Remove(BoughtItem);
+            } else {
+                ShowErrorWindow("Bad purchase!\nYou probably dont have enough gold!", errorWindow);
             }
 
         } else {
             BasePotion BoughtItem = TargetInv.Potions[itemIndex - TargetInv.Weapons.Count - TargetInv.Equipment.Count];
             if (option.Equals("bought") && GameInformation.Gold >= BoughtItem.Price || option.Equals("sold")) {
-                Debug.Log("You just " + option + ": " + BoughtItem.ItemName);
+                ShowErrorWindow("You just " + option + " " + BoughtItem.ItemName, errorWindow);
                 GameInformation.Gold = GameInformation.Gold - BoughtItem.Price * price;
                 OtherInv.Potions.Add(BoughtItem);
                 TargetInv.Potions.Remove(BoughtItem);
+            } else {
+                ShowErrorWindow("Bad purchase!\nYou probably dont have enough gold!", errorWindow);
             }
         }
 
-        Debug.Log("YOUR INVENTORY");
-        GameInformation.PlayerInventory.printInventory();
-        //Debug.Log("SHOP INVENTORY");
-        //WorldInformation.shopInv.printInventory();
-
         if (switcher == 0) { DisplayStoreInventory(); } else { DisplayPlayerInventory(); }
+    }
+
+    public static void ShowErrorWindow(string errorMsg, GameObject window) {       
+        window.SetActive(true);
+        window.transform.GetChild(1).GetComponent<Text>().text = errorMsg;
     }
 
 }

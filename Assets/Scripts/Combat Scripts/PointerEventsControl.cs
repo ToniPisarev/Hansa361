@@ -9,7 +9,7 @@ public class PointerEventsControl : MonoBehaviour, IPointerEnterHandler, IPointe
 
     private AudioClip audioclip;
     private Transform abilityPanel;
-    public CharController charControl;
+    public PlayerController charControl;
     public BaseCharacter myCharacter;
     public int i;
 

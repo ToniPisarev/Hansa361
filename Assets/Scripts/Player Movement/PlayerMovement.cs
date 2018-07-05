@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-
+/*
 public class PlayerMovement : MonoBehaviour {
 
     //private GameInfo gameInfo = new GameInfo();
@@ -121,3 +121,4 @@ public class PlayerMovement : MonoBehaviour {
 }
 
 
+    */

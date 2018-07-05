@@ -108,7 +108,7 @@ public class CreateNewQuest {
 
     private void DetermineLocation() {
         int randTemp = Random.Range(1, 34);
-        Area questLocation = WorldInformation.Areas.Find(x => x.IconNumber == randTemp);
+        Area questLocation = WorldInformation.Areas.Find(x => x.AreaID == randTemp);
         newQuest.QuestLocation = questLocation;
     }
 

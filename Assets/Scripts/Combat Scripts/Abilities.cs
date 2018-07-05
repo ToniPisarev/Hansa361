@@ -22,7 +22,7 @@ public abstract class Abilities {
     public int damage;
 
     protected BaseCharacter myCharacter;
-    protected CharController charControl;
+    protected PlayerController charControl;
 
     public Abilities(Cell cell, BaseCharacter character) {
         grid = cell;
@@ -103,7 +103,7 @@ public class SpearAttack : Abilities {
         }
 
         trans.GetComponent<Animator>().Play("Attack SP");
-        trans.GetComponent<CharController>().Attack(attackTiles, isPhysical, damage, "");
+        trans.GetComponent<PlayerController>().Attack(attackTiles, isPhysical, damage, "");
     }
 
     // helper function:
@@ -136,9 +136,9 @@ public class HealingLight : Abilities {
         //TODO: increase strength in CharController
 
         // Apply damage (to no tile)
-        BaseCharacter myCharacter = trans.GetComponent<CharController>().myCharacter;
+        BaseCharacter myCharacter = trans.GetComponent<PlayerController>().myCharacter;
         myCharacter.CurrentHealth += (int)(myCharacter.Health * 0.2f);
-        trans.GetComponent<CharController>().Attack(attackTiles, isPhysical, damage, "heal");
+        trans.GetComponent<PlayerController>().Attack(attackTiles, isPhysical, damage, "heal");
     }
 
 }
@@ -176,7 +176,7 @@ public class DoubleStab : Abilities {
         }
 
         trans.GetComponent<Animator>().Play("Double Stab");
-        trans.GetComponent<CharController>().Attack(attackTiles, isPhysical, damage, "");
+        trans.GetComponent<PlayerController>().Attack(attackTiles, isPhysical, damage, "");
     }
 
     // helper function
@@ -215,7 +215,7 @@ public class Stab : Abilities {
         }
 
         trans.GetComponent<Animator>().Play("Stab");
-        trans.GetComponent<CharController>().Attack(attackTiles, isPhysical, damage, "");
+        trans.GetComponent<PlayerController>().Attack(attackTiles, isPhysical, damage, "");
     }
 
     // helper function
@@ -252,7 +252,7 @@ public class LegSweep : Abilities {
         }
 
         trans.GetComponent<Animator>().Play("Leg Sweep");
-        trans.GetComponent<CharController>().Attack(attackTiles, isPhysical, damage, "");
+        trans.GetComponent<PlayerController>().Attack(attackTiles, isPhysical, damage, "");
     }
 
     // helper function
@@ -290,9 +290,9 @@ public class TwoTurn : Abilities {
         }
 
         trans.GetComponent<Animator>().Play("Leg Sweep");
-        if (trans.GetComponent<CharController>().showLabel5 == false)
-            trans.GetComponent<CharController>().takeTwoTurns = true;
-        trans.GetComponent<CharController>().Attack(attackTiles, isPhysical, damage, "");
+        if (trans.GetComponent<PlayerController>().showLabel5 == false)
+            trans.GetComponent<PlayerController>().takeTwoTurns = true;
+        trans.GetComponent<PlayerController>().Attack(attackTiles, isPhysical, damage, "");
     }
 
     // helper function
@@ -340,7 +340,7 @@ public class Fireball : Abilities {
         }
 
         // Apply damage
-        trans.GetComponent<CharController>().Attack(attackTiles, isPhysical, damage, "");
+        trans.GetComponent<PlayerController>().Attack(attackTiles, isPhysical, damage, "");
 
     }
 
@@ -400,7 +400,7 @@ public class Lightning : Abilities {
         }
 
         // Apply damage
-        trans.GetComponent<CharController>().Attack(attackTiles, isPhysical, damage, "");
+        trans.GetComponent<PlayerController>().Attack(attackTiles, isPhysical, damage, "");
 
 
     }
@@ -465,7 +465,7 @@ public class ArcaneBlast : Abilities {
         }
 
         // Apply damage
-        trans.GetComponent<CharController>().Attack(attackTiles, isPhysical, damage, "");
+        trans.GetComponent<PlayerController>().Attack(attackTiles, isPhysical, damage, "");
 
 
     }
@@ -523,7 +523,7 @@ public class Sleep : Abilities {
         }
         trans.GetComponent<Animator>().Play("Standing 1H Magic Attack 02");
         //TODO：make the target to sleep
-        trans.GetComponent<CharController>().Attack(attackTiles, isPhysical, damage, "sleep");
+        trans.GetComponent<PlayerController>().Attack(attackTiles, isPhysical, damage, "sleep");
         // If no valid target, then do nothing
     }
 }
@@ -563,7 +563,7 @@ public class Kick : Abilities {
         }
 
         trans.GetComponent<Animator>().Play("Kick");
-        trans.GetComponent<CharController>().Attack(attackTiles, isPhysical, damage, "");
+        trans.GetComponent<PlayerController>().Attack(attackTiles, isPhysical, damage, "");
     }
 
     // helper function
@@ -601,7 +601,7 @@ public class IceArrow : Abilities {
         }
 
         // Apply damage
-        trans.GetComponent<CharController>().Attack(attackTiles, isPhysical, damage, "");
+        trans.GetComponent<PlayerController>().Attack(attackTiles, isPhysical, damage, "");
 
     }
 
@@ -669,7 +669,7 @@ public class Fog : Abilities {
         }
 
         // Apply damage
-        trans.GetComponent<CharController>().Attack(attackTiles, isPhysical, damage, "");
+        trans.GetComponent<PlayerController>().Attack(attackTiles, isPhysical, damage, "");
 
 
     }
@@ -729,7 +729,7 @@ public class BladeWind : Abilities {
         }
 
         // Apply damage
-        trans.GetComponent<CharController>().Attack(attackTiles, isPhysical, damage, "");
+        trans.GetComponent<PlayerController>().Attack(attackTiles, isPhysical, damage, "");
 
 
     }
