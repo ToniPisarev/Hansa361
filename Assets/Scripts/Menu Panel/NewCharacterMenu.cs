@@ -78,6 +78,7 @@ public class NewCharacterMenu : MonoBehaviour {
         GameInformation.Gold = newPlayer.Gold;
         GameInformation.PlayerInventory = newPlayer.PlayerInventory;
         GameInformation.PlayerQuestLog = newPlayer.PlayerQuestLog;
+        GameInformation.SideCharacters = new BaseCharacter[5];
         SaveInformation.SaveAllInformation();
     }
 }

@@ -20,7 +20,7 @@ public class GetStoreInventory : MonoBehaviour {
     private int index = 0;
     private int switcher = 0;
 
-    void Start() {       
+    void Start() {
         LoadInformation.LoadAllInformation();
         height = -20;
     }
@@ -75,7 +75,7 @@ public class GetStoreInventory : MonoBehaviour {
         List<GameObject> children = new List<GameObject>();
         foreach (Transform child in shopContent.transform) children.Add(child.gameObject);
         children.ForEach(child => Destroy(child));
-       
+
         sellButton.SetActive(false);
         buyButton.SetActive(true);
 
@@ -120,7 +120,7 @@ public class GetStoreInventory : MonoBehaviour {
 
         Name = button.transform.GetChild(2).gameObject;
         text = Name.GetComponent<Text>();
-        text.text = "Damage: " + weapon.Damage + "\nStrength: " + weapon.Strength + "\nIntellect: " + weapon.Intellect + "\nAgility : " + weapon.Agility + " \nDefense: " + weapon.Defense;
+        text.text = "\nStrength: " + weapon.Strength + "\nIntellect: " + weapon.Intellect + "\nAgility : " + weapon.Agility + " \nDefense: " + weapon.Defense;
 
     }
 
@@ -146,7 +146,7 @@ public class GetStoreInventory : MonoBehaviour {
 
         Name = button.transform.GetChild(2).gameObject;
         text = Name.GetComponent<Text>();
-        text.text = "Resistance: " + equip.Resistance + "\nStrength: " + equip.Strength + "\nIntellect: " + equip.Intellect + "\nAgility : " + equip.Agility + " \nDefense: " + equip.Defense;
+        text.text = "\nStrength: " + equip.Strength + "\nIntellect: " + equip.Intellect + "\nAgility : " + equip.Agility + " \nDefense: " + equip.Defense;
 
     }
     public void ShowPotionInStore(BasePotion potion) {
@@ -192,27 +192,32 @@ public class GetStoreInventory : MonoBehaviour {
             price = -1;
         }
 
-        //Debug.Log(itemIndex);
         if (itemIndex < TargetInv.Weapons.Count) {
             BaseWeapon BoughtItem = TargetInv.Weapons[itemIndex];
-            Debug.Log("You just " + option + ": " + BoughtItem.ItemName);
-            GameInformation.Gold = GameInformation.Gold - BoughtItem.Price * price;
-            OtherInv.Weapons.Add(BoughtItem);
-            TargetInv.Weapons.Remove(BoughtItem);
+            if (option.Equals("bought") && GameInformation.Gold >= BoughtItem.Price || option.Equals("sold")) {
+                Debug.Log("You just " + option + ": " + BoughtItem.ItemName);
+                GameInformation.Gold = GameInformation.Gold - BoughtItem.Price * price;
+                OtherInv.Weapons.Add(BoughtItem);
+                TargetInv.Weapons.Remove(BoughtItem);
+            }
 
         } else if (itemIndex - TargetInv.Weapons.Count < TargetInv.Equipment.Count) {
             BaseEquipment BoughtItem = TargetInv.Equipment[itemIndex - TargetInv.Weapons.Count];
-            Debug.Log("You just " + option + ": " + BoughtItem.ItemName);
-            GameInformation.Gold = GameInformation.Gold - BoughtItem.Price * price;
-            OtherInv.Equipment.Add(BoughtItem);
-            TargetInv.Equipment.Remove(BoughtItem);
+            if (option.Equals("bought") && GameInformation.Gold >= BoughtItem.Price || option.Equals("sold")) {
+                Debug.Log("You just " + option + ": " + BoughtItem.ItemName);
+                GameInformation.Gold = GameInformation.Gold - BoughtItem.Price * price;
+                OtherInv.Equipment.Add(BoughtItem);
+                TargetInv.Equipment.Remove(BoughtItem);
+            }
 
         } else {
             BasePotion BoughtItem = TargetInv.Potions[itemIndex - TargetInv.Weapons.Count - TargetInv.Equipment.Count];
-            Debug.Log("You just " + option + ": " + BoughtItem.ItemName);
-            GameInformation.Gold = GameInformation.Gold - BoughtItem.Price * price;
-            OtherInv.Potions.Add(BoughtItem);
-            TargetInv.Potions.Remove(BoughtItem);
+            if (option.Equals("bought") && GameInformation.Gold >= BoughtItem.Price || option.Equals("sold")) {
+                Debug.Log("You just " + option + ": " + BoughtItem.ItemName);
+                GameInformation.Gold = GameInformation.Gold - BoughtItem.Price * price;
+                OtherInv.Potions.Add(BoughtItem);
+                TargetInv.Potions.Remove(BoughtItem);
+            }
         }
 
         Debug.Log("YOUR INVENTORY");

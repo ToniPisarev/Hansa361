@@ -62,12 +62,14 @@ public class HealthBar : MonoBehaviour {
 
             if (myCharacter.CurrentHealth <= 0 && charControl.isDead == false) {
                 charControl.isDead = true;
-                
+                updateHealthBar = false;
 
                 if (isEnemy) {
                     TurnBasedCombatStateMachine.enemyDeathCount++;
+                    Debug.Log(myCharacter.PlayerName + " died death count - " + TurnBasedCombatStateMachine.enemyDeathCount);
                 } else {
                     TurnBasedCombatStateMachine.deathCount++;
+                    Debug.Log(myCharacter.PlayerName + " died death count - " + TurnBasedCombatStateMachine.deathCount);
                 }
 
                 //Set lose state
@@ -93,7 +95,7 @@ public class HealthBar : MonoBehaviour {
                     transform.parent.GetComponentInParent<TurnBasedCombatStateMachine>().SetCurrentState(5);
                 }
                 Destroy(healthBar);
-                updateHealthBar = false;
+                
             }
         }
     }

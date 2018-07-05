@@ -28,12 +28,15 @@ public class PointerEventsControl : MonoBehaviour, IPointerEnterHandler, IPointe
         Text ability = abilityPanel.Find("Ability").GetComponent<Text>();
         Text range = abilityPanel.Find("Range").GetComponent<Text>();
         Text damage = abilityPanel.Find("Damage").GetComponent<Text>();
-        Text weapon = abilityPanel.Find("Weapon").GetComponent<Text>();
+        Text weaponText = abilityPanel.Find("Weapon").GetComponent<Text>();
 
         ability.text = charControl.skills[i - 1].description;
         damage.text = "Damage: " + charControl.skills[i - 1].damage;
         range.text = "Range: " + charControl.skills[i - 1].minRange + "-" + charControl.skills[i - 1].maxRange;
-        weapon.text = "Weapon: " + charControl.weapon;
+        if (myCharacter.Weapon != null && myCharacter.Weapon.ItemName != null) {
+            weaponText.text = "Weapon: " + myCharacter.Weapon.ItemName;
+        }
+        
     }
 
     public void OnPointerExit(PointerEventData eventData) {

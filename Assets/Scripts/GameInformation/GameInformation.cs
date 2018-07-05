@@ -21,10 +21,8 @@ public class GameInformation : MonoBehaviour {
     public static QuestLog PlayerQuestLog { get; set; }
 
     //Store all character info!
-    [SerializeField]
     public static BaseCharacter PlayerCharacter { get; set; }
-    [SerializeField]
-    public static BaseCharacter [] SideCharacters { get; set; }
+    public static BaseCharacter[] SideCharacters { get; set; }
 
     //Set characters stats
     public static void SetCharacterStats(BaseCharacter character) {
@@ -52,7 +50,7 @@ public class GameInformation : MonoBehaviour {
             character.Strength = 3;
             character.Agility = 3;
             character.Intellect = 2;
-            character.Defense = 2;    
+            character.Defense = 2;
         } else if (character.PlayerClass == BaseCharacterClass.CharacterClasses.Knight) {
             //Set knight stats
             character.Strength = 8;
@@ -111,9 +109,11 @@ public class GameInformation : MonoBehaviour {
         character.Mana = 50 + character.PlayerLevel * 10;
         character.CurrentHealth = character.Health;
 
-        character.PhysicalDamage = (int)(10 + (float)(character.Strength / 20.00f) * character.Health);
-        character.MagicDamage = (int)(10 + (float)(character.Intellect / 20.00f) * character.Health);
-        character.MitigatedDamage = (int)(2 + (character.Defense / 20.00f * character.Health));
-       
+        character.Helmet = null;
+        character.Armor = null;
+        character.Gauntlets = null;
+        character.Grieves = null;
+        character.Weapon = null;
+
     }
 }

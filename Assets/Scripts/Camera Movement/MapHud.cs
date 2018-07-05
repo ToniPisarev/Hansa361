@@ -36,20 +36,20 @@ public class MapHud : MonoBehaviour {
             if (GameInformation.PlayerQuestLog.CurrentQuests[i].QuestLocation.IconNumber == myArea.IconNumber) {
 
                 //Show current quests in the right area!
-                GameObject button = (GameObject)Instantiate(Resources.Load("QuestButtonMainHuD"));
-                button.transform.SetParent(HUDContent.transform);
-                SetListener(button.GetComponent<Button>(), index, GameInformation.PlayerQuestLog.CurrentQuests[i], DecisionPanel);
+                GameObject questButton = (GameObject)Instantiate(Resources.Load("QuestButtonMainHuD"));
+                questButton.transform.SetParent(HUDContent.transform);
+                SetListener(questButton.GetComponent<Button>(), index, GameInformation.PlayerQuestLog.CurrentQuests[i], questButton);
                 index++;
 
-                RectTransform ButtonRect = (RectTransform)button.transform;
+                RectTransform ButtonRect = (RectTransform)questButton.transform;
                 ButtonRect.anchoredPosition3D = new Vector3(0, height, 0);
                 ButtonRect.localScale = new Vector3(1, 1, 1);
 
-                GameObject Name = button.transform.GetChild(0).gameObject;
+                GameObject Name = questButton.transform.GetChild(0).gameObject;
                 Text text = Name.GetComponent<Text>();
                 text.text = GameInformation.PlayerQuestLog.CurrentQuests[i].QuestName;
 
-                Name = button.transform.GetChild(1).gameObject;
+                Name = questButton.transform.GetChild(1).gameObject;
                 text = Name.GetComponent<Text>();
 
                 text.text = "Reward: " + GameInformation.PlayerQuestLog.CurrentQuests[i].GoldReward + " Gold";
@@ -74,40 +74,53 @@ public class MapHud : MonoBehaviour {
     }
 
 
-    private static void SetListener(Button B, int index, Quest q, GameObject DP) {
+    private static void SetListener(Button questButton, int index, Quest q, GameObject questObject) {
         //Adds a listener onto a button 
         int i = index;
-        B.onClick.AddListener(delegate { StartQuest(i, q, DP); });
+        questButton.onClick.AddListener(delegate { StartQuest(i, q, questObject); });
 
     }
 
-    private static void StartQuest(int i, Quest q, GameObject DP) {
-
+    private static void StartQuest(int i, Quest q, GameObject questButton) {
+        
         GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Travelling;
 
-        //Call the scene switch with an active quest
-        WorldInformation.CurrentQuest = q;
-        Debug.Log("Quest activated!");
+        //Quests
+        if (q.QuestType == Quest.QuestTypes.Delivery) {
 
-        //scene switch
-        if (q.QuestType == Quest.QuestTypes.Control) {
-            WorldInformation.Control = q;
-            //set decision panel to active
-            DP.SetActive(true);
-            GameObject titleText = DP.transform.GetChild(2).gameObject;
-            Text texty = titleText.GetComponent<Text>();
-            texty.text = q.QuestAlliance.KingName + "'s territory " + q.QuestLocation.AreaName + " is being taken over by " + q.QuestEnemy.KingName;
+            // Get quest rewards
+            GameInformation.Gold += q.GoldReward;
+            if (q.WeaponReward != null) {
+                GameInformation.PlayerInventory.Weapons.Add(q.WeaponReward);
+            }
+            if (q.EquipmentReward != null) {
+                GameInformation.PlayerInventory.Equipment.Add(q.EquipmentReward);
+            }
+            if (q.PotionReward != null) {
+                GameInformation.PlayerInventory.Potions.Add(q.PotionReward);
+            }
 
+            // move the quest to FinishedQuests
+            GameInformation.PlayerQuestLog.FinishedQuests.Add(q);
+            GameInformation.PlayerQuestLog.CurrentQuests.Remove(q);
+            Destroy(questButton);
+        }
+        else if (q.QuestType == Quest.QuestTypes.Control) {
+            
         } else {
+
+            WorldInformation.CurrentQuest = q;
+
             GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
             if (q.QuestLocation.AreaType == Area.AreaTypes.Plains) {
                 SceneManager.LoadScene("Combat1");
             } else if (q.QuestLocation.AreaType == Area.AreaTypes.Desert) {
-                SceneManager.LoadScene("Combat3");
+                SceneManager.LoadScene("Combat1");
             } else {
                 SceneManager.LoadScene("Combat2");
             }
         }
+
     }
 
     public void AttackControl() {

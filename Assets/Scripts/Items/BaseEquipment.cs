@@ -12,7 +12,6 @@ public class BaseEquipment : BaseStatItem {
         Grieves
     }
 
-    public int Resistance { get; set; }
-    public EquipmentTypes EquipmentType { get; set; }
-    
+    public int Value { get; set; }
+    public EquipmentTypes EquipmentType { get; set; }   
 }

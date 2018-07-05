@@ -25,3 +25,7 @@ MonoBehaviour:
   - _texture: {fileID: 2800000, guid: 109cbec5a89f62545bd3f7b13791af1d, type: 3}
   - _texture: {fileID: 2800000, guid: 821db1370dc3445919a3442ae8f0dcbc, type: 3}
   - _texture: {fileID: 2800000, guid: bfd675cc0db1d4656b75dc6d6ba91142, type: 3}
+  - _texture: {fileID: 2800000, guid: f5d1de47f0f760544a5596ceb8cc895f, type: 3}
+  - _texture: {fileID: 2800000, guid: 3787ecf31b318914f908bb48537ebf10, type: 3}
+  - _texture: {fileID: 2800000, guid: 9015343c9bb2cf74083767e91127c98d, type: 3}
+  - _texture: {fileID: 2800000, guid: e9866699a4ddce642b7da4aeaa74d279, type: 3}

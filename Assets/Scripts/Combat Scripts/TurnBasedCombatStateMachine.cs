@@ -41,11 +41,12 @@ public class TurnBasedCombatStateMachine : MonoBehaviour {
         currentState = BattleStates.PLAYERCHOICE;
         back = transform.Find("Canvas/Back").GetComponent<Button>();
         endscene = transform.Find("Canvas/EndScene");
-        content = endscene.Find("Scroll View/Viewport/Content").GetComponent<Text>();
-        scrollView = endscene.Find("Scroll View");
+        content = endscene.Find("ScrollView/Viewport/Content").GetComponent<Text>();
+        scrollView = endscene.Find("ScrollView");
         stateText = endscene.Find("State").GetComponent<Text>();
         loss = endscene.Find("Loss");
-        //worldInfo = GameObject.Find("GameInformation").GetComponent<WorldInformation>();
+        deathCount = 0;
+        enemyDeathCount = 0;
     }
 
     private string DisplayString(BaseCharacter c) {
@@ -65,6 +66,8 @@ public class TurnBasedCombatStateMachine : MonoBehaviour {
     }
 
     public void NextScene() {
+        SaveInformation.SaveAllInformation();
+
         endscene.gameObject.SetActive(false);
         loss.gameObject.SetActive(false);
         scrollView.gameObject.SetActive(false);
@@ -83,11 +86,13 @@ public class TurnBasedCombatStateMachine : MonoBehaviour {
         loss.gameObject.SetActive(true);
         stateText.text = "You Lose!";
 
-        // if lose, minus gold
+        // if lose - minus gold, remove all companions, and set health to half
         GameInformation.Gold -= goldPenalty;
         if (GameInformation.Gold < 0) {
             GameInformation.Gold = 0;
         }
+        GameInformation.SideCharacters = new BaseCharacter[5];
+        GameInformation.PlayerCharacter.CurrentHealth = GameInformation.PlayerCharacter.Health / 2;
     }
 
     public void Win() {
@@ -102,7 +107,7 @@ public class TurnBasedCombatStateMachine : MonoBehaviour {
         Debug.Log(WorldInformation.CurrentQuest.QuestName);
         content.text = "You have finished the quest: \n* *\n";
         content.text += WorldInformation.CurrentQuest.QuestName;
-        content.text += "\n* *\nAll characters have gained 40 experience.";
+        content.text += "\n* *\nAll characters have gained " + experienceGain + " experience.";
 
         // if win, get the rewards
         GameInformation.Gold += WorldInformation.CurrentQuest.GoldReward;
@@ -121,6 +126,11 @@ public class TurnBasedCombatStateMachine : MonoBehaviour {
         GameInformation.PlayerQuestLog.FinishedQuests.Add(WorldInformation.CurrentQuest);
         GameInformation.PlayerQuestLog.CurrentQuests.Remove(WorldInformation.CurrentQuest);
         WorldInformation.CurrentQuest = null;
+
+        //check if you died and return some health
+        if(GameInformation.PlayerCharacter.CurrentHealth <= 0) {
+            GameInformation.PlayerCharacter.CurrentHealth = GameInformation.PlayerCharacter.Health / 2;
+        }
 
         //Gain XP, check for levelup
         Promote(GameInformation.PlayerCharacter);
@@ -182,17 +192,13 @@ public class TurnBasedCombatStateMachine : MonoBehaviour {
                     character.Defense += tier;
                     character.Intellect += tier;
                 }
-
-                SaveInformation.SaveAllInformation();
-                
+                               
 
                 content.text += "\n* *\nLevel up!\n* *\n" + character.PlayerName +
                 "\nDefense: " + oldD + "-->" + character.Defense +
                 "\nAgility: " + oldA + "-->" + character.Agility +
                 "\nIntellect: " + oldI + "-->" + character.Intellect +
                 "\nStrength: " + oldS + "-->" + character.Strength;
-
-
             }
         }
     }

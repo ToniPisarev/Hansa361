@@ -19,7 +19,6 @@ public class CreateNewEquipment {
 
     public BaseEquipment returnEquipment() {
         CreateEquipment(GameInformation.PlayerCharacter.PlayerLevel, 0);
-        //Debug.Log(newWeapon.ItemName);
         return newEquipment;
     }
 
@@ -46,7 +45,6 @@ public class CreateNewEquipment {
         }
 
         ChooseItemType(piece);
-        DetermineResistance();
         DeterminePrice();
         DetermineName();
         newEquipment.ItemDescription = "Provides some defense...";
@@ -54,7 +52,7 @@ public class CreateNewEquipment {
 
     private void DeterminePrice() {
         price = price + 2 * (newEquipment.Strength + newEquipment.Agility + newEquipment.Defense + newEquipment.Intellect);
-        newEquipment.Price = 2 * newEquipment.Resistance + price;
+        newEquipment.Price = 2 * newEquipment.Value + price;
     }
 
     private void DetermineName() {
@@ -64,15 +62,14 @@ public class CreateNewEquipment {
         }
     }
 
-    private void DetermineResistance() {
+    private void DetermineValue() {
         if (itemType == 1) {
-            newEquipment.Resistance = itemRarity * Random.Range(20, 25);
+            newEquipment.Value = itemRarity * Random.Range(20, 25);
         } else if (itemType == 2) {
-            newEquipment.Resistance = itemRarity * Random.Range(11, 16);
+            newEquipment.Value = itemRarity * Random.Range(11, 16);
         } else {
-            newEquipment.Resistance = itemRarity * Random.Range(7, 12);
+            newEquipment.Value = itemRarity * Random.Range(7, 12);
         }
-
     }
 
     private void DetermineStats() {

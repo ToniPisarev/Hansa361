@@ -6,8 +6,9 @@ using System.Collections.Generic;
 public class LoadInventoryPause : MonoBehaviour {
 
     public GameObject InvContent;
-    public GameObject IDP;
+    public GameObject IDP; //inventory detail panel
     public GameObject weaponButton;
+
     private GameObject InvDetailPanel;
     public GameObject characterChoosePanel;
 
@@ -79,7 +80,7 @@ public class LoadInventoryPause : MonoBehaviour {
 
         GameObject Name = button.transform.GetChild(0).gameObject; // name
         Text text = Name.GetComponent<Text>();
-        text.text = weapon.ItemName + "\n" + weapon.ItemRarity;
+        text.text = weapon.ItemName;
 
         Name = button.transform.GetChild(1).gameObject; // price
         text = Name.GetComponent<Text>();
@@ -87,7 +88,7 @@ public class LoadInventoryPause : MonoBehaviour {
 
         Name = button.transform.GetChild(2).gameObject; // stats
         text = Name.GetComponent<Text>();
-        text.text = "Damage: " + weapon.Damage + "\nStrength: " + weapon.Strength + "\nIntellect: " + weapon.Intellect + "\nAgility : " + weapon.Agility + " \nDefense: " + weapon.Defense;
+        text.text = "Strength: " + weapon.Strength + "\nIntellect: " + weapon.Intellect + "\nAgility : " + weapon.Agility + " \nDefense: " + weapon.Defense;
 
     }
 
@@ -102,7 +103,7 @@ public class LoadInventoryPause : MonoBehaviour {
 
         GameObject Name = button.transform.GetChild(0).gameObject; // name
         Text text = Name.GetComponent<Text>();
-        text.text = equip.ItemName + "\n" + equip.ItemRarity;
+        text.text = equip.ItemName;
 
         Name = button.transform.GetChild(1).gameObject; // price
         text = Name.GetComponent<Text>();
@@ -110,9 +111,9 @@ public class LoadInventoryPause : MonoBehaviour {
 
         Name = button.transform.GetChild(2).gameObject; // stats
         text = Name.GetComponent<Text>();
-        text.text = "Resistance: " + equip.Resistance + "\nStrength: " + equip.Strength + "\nIntellect: " + equip.Intellect + "\nAgility : " + equip.Agility + " \nDefense: " + equip.Defense;
-
+        text.text = "Strength: " + equip.Strength + "\nIntellect: " + equip.Intellect + "\nAgility : " + equip.Agility + " \nDefense: " + equip.Defense;
     }
+
     private void ShowPotion(BasePotion potion, int height) {
         GameObject button = (GameObject)Instantiate(Resources.Load("InventoryButton"));
         button.transform.SetParent(InvContent.transform);
@@ -124,7 +125,7 @@ public class LoadInventoryPause : MonoBehaviour {
 
         GameObject Name = button.transform.GetChild(0).gameObject; // name
         Text text = Name.GetComponent<Text>();
-        text.text = potion.ItemName + "\n" + potion.ItemRarity;
+        text.text = potion.ItemName;
 
         Name = button.transform.GetChild(1).gameObject; // price
         text = Name.GetComponent<Text>();
@@ -138,23 +139,23 @@ public class LoadInventoryPause : MonoBehaviour {
 
     private void SetListenerPotion(Button B, BasePotion p) {
 
-        B.onClick.AddListener(delegate { showInventoryDetailPotion(p); });
+        B.onClick.AddListener(delegate { ShowInventoryDetailPotion(p); });
 
     }
 
     private void SetListenerEquipment(Button B, BaseEquipment p) {
 
-        B.onClick.AddListener(delegate { showInventoryDetailEquipment(p); });
+        B.onClick.AddListener(delegate { ShowInventoryDetailEquipment(p); });
 
     }
 
     private void SetListenerWeapon(Button B, BaseWeapon p) {
 
-        B.onClick.AddListener(delegate { showInventoryDetailWeapon(p); });
+        B.onClick.AddListener(delegate { ShowInventoryDetailWeapon(p); });
 
     }
 
-    private void showInventoryDetailPotion(BasePotion p) {
+    private void ShowInventoryDetailPotion(BasePotion p) {
         Image i = InvDetailPanel.transform.GetChild(0).gameObject.GetComponent<Image>();
         switch (p.PotionType) {
             case BasePotion.PotionTypes.Health:
@@ -180,7 +181,7 @@ public class LoadInventoryPause : MonoBehaviour {
                 break;
         }
 
-        InvDetailPanel.transform.GetChild(1).gameObject.GetComponent<Text>().text = p.ItemName + "\n" + p.ItemRarity;
+        InvDetailPanel.transform.GetChild(1).gameObject.GetComponent<Text>().text = p.ItemName;
         InvDetailPanel.transform.GetChild(2).gameObject.GetComponent<Text>().text = "Price: $ " + p.Price;
         InvDetailPanel.transform.GetChild(3).gameObject.GetComponent<Text>().text = p.ItemDescription;
         InvDetailPanel.transform.GetChild(4).gameObject.GetComponent<Text>().text = "Effectiveness: " + p.Effectiveness;
@@ -191,7 +192,7 @@ public class LoadInventoryPause : MonoBehaviour {
         InvDetailPanel.SetActive(true);
     }
 
-    private void showInventoryDetailEquipment(BaseEquipment p) {
+    private void ShowInventoryDetailEquipment(BaseEquipment p) {
         Image i = InvDetailPanel.transform.GetChild(0).gameObject.GetComponent<Image>();
         switch (p.EquipmentType) {
             case BaseEquipment.EquipmentTypes.Armor:
@@ -209,22 +210,21 @@ public class LoadInventoryPause : MonoBehaviour {
 
         }
 
-
-        InvDetailPanel.transform.GetChild(1).gameObject.GetComponent<Text>().text = p.ItemName + "\n" + p.ItemRarity;
+        InvDetailPanel.transform.GetChild(1).gameObject.GetComponent<Text>().text = p.ItemName;
         InvDetailPanel.transform.GetChild(2).gameObject.GetComponent<Text>().text = "Price: $ " + p.Price;
         InvDetailPanel.transform.GetChild(3).gameObject.GetComponent<Text>().text = p.ItemDescription;
-        InvDetailPanel.transform.GetChild(4).gameObject.GetComponent<Text>().text = "Resistance: " + p.Resistance + "\nStrength: " + p.Strength + "\nIntellect: " + p.Intellect + "\nAgility : " + p.Agility + " \nDefense: " + p.Defense;
+        InvDetailPanel.transform.GetChild(4).gameObject.GetComponent<Text>().text = "Strength: " + p.Strength + "\nIntellect: " + p.Intellect + "\nAgility : " + p.Agility + " \nDefense: " + p.Defense;
 
         GameObject B = InvDetailPanel.transform.GetChild(6).gameObject;
         B.SetActive(true);
         B.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Equip";
         InvDetailPanel.SetActive(true);
         B.GetComponent<Button>().onClick.RemoveAllListeners();
-        B.GetComponent<Button>().onClick.AddListener(delegate { equipEquipment(p); });
+        B.GetComponent<Button>().onClick.AddListener(delegate { EquipEquipment(p); });
 
     }
 
-    private void showInventoryDetailWeapon(BaseWeapon p) {
+    private void ShowInventoryDetailWeapon(BaseWeapon p) {
         Image i = InvDetailPanel.transform.GetChild(0).gameObject.GetComponent<Image>();
 
         switch (p.WeaponType) {
@@ -261,66 +261,105 @@ public class LoadInventoryPause : MonoBehaviour {
                 break;
         }
 
-        InvDetailPanel.transform.GetChild(1).gameObject.GetComponent<Text>().text = p.ItemName + "\n" + p.ItemRarity;
+        InvDetailPanel.transform.GetChild(1).gameObject.GetComponent<Text>().text = p.ItemName;
         InvDetailPanel.transform.GetChild(2).gameObject.GetComponent<Text>().text = "Price: $ " + p.Price;
         InvDetailPanel.transform.GetChild(3).gameObject.GetComponent<Text>().text = p.ItemDescription;
-        InvDetailPanel.transform.GetChild(4).gameObject.GetComponent<Text>().text = "Damage: " + p.Damage + "\nStrength: " + p.Strength + "\nIntellect: " + p.Intellect + "\nAgility : " + p.Agility + " \nDefense: " + p.Defense;
+        InvDetailPanel.transform.GetChild(4).gameObject.GetComponent<Text>().text = "Strength: " + p.Strength + "\nIntellect: " + p.Intellect + "\nAgility : " + p.Agility + " \nDefense: " + p.Defense;
 
         InvDetailPanel.SetActive(true);
-        GameObject B = InvDetailPanel.transform.GetChild(6).gameObject;
-        B.SetActive(true);
-        B.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Equip";
-        B.GetComponent<Button>().onClick.RemoveAllListeners();
-        B.GetComponent<Button>().onClick.AddListener(delegate { equipWeapon(p); });
+        GameObject button = InvDetailPanel.transform.GetChild(6).gameObject;
+        button.SetActive(true);
+        button.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Equip";
+        button.GetComponent<Button>().onClick.RemoveAllListeners();
+        button.GetComponent<Button>().onClick.AddListener(delegate { EquipWeapon(p); });
 
     }
-    private void equipWeaponOnChar(BaseCharacter c, BaseWeapon w) {
+   
+    private void EquipWeaponOnChar(BaseCharacter c, BaseWeapon w) {
+        //unequip current weapon if there is one
         if (c.Weapon != null) {
             GameInformation.PlayerInventory.Weapons.Add(c.Weapon);
+            GameInformation.PlayerCharacter.Intellect -= c.Weapon.Intellect;
+            GameInformation.PlayerCharacter.Strength -= c.Weapon.Strength;
+            GameInformation.PlayerCharacter.Agility -= c.Weapon.Agility;
+            GameInformation.PlayerCharacter.Defense -= c.Weapon.Defense;
         }
-        c.Weapon = w;                                      // equip on c
-        GameInformation.PlayerInventory.Weapons.Remove(w); // Remove w from inventory
+
+        //equip weapon
+        c.Weapon = w;
+        GameInformation.PlayerInventory.Weapons.Remove(c.Weapon);
+        GameInformation.PlayerCharacter.Intellect += c.Weapon.Intellect;
+        GameInformation.PlayerCharacter.Strength += c.Weapon.Strength;
+        GameInformation.PlayerCharacter.Agility += c.Weapon.Agility;
+        GameInformation.PlayerCharacter.Defense += c.Weapon.Defense;
+
         InvDetailPanel.SetActive(false);
         characterChoosePanel.SetActive(false);
         ShowAllWeapons();
     }
 
-    private void equipEquipmentOnChar(BaseCharacter c, BaseEquipment w) {
+    private void EquipEquipmentOnChar(BaseCharacter c, BaseEquipment w) {
         switch (w.EquipmentType)  // determine equipment type
         {
             case BaseEquipment.EquipmentTypes.Armor:
-                if (c.Armor != null) // if theres an armor equipped
-                {
+                //unequip current armor if there is one
+                if (c.Armor != null) {
+                    GameInformation.PlayerCharacter.Intellect -= w.Intellect;
+                    GameInformation.PlayerCharacter.Strength -= w.Strength;
+                    GameInformation.PlayerCharacter.Agility -= w.Agility;
+                    GameInformation.PlayerCharacter.Defense -= w.Defense;
                     GameInformation.PlayerInventory.Equipment.Add(c.Armor);
                 }
                 c.Armor = w;
                 break;
             case BaseEquipment.EquipmentTypes.Gauntlets:
-                if (c.Gauntlets != null) {
+                //unequip current gauntlets if there is one
+                if (c.Armor != null) {
                     GameInformation.PlayerInventory.Equipment.Add(c.Gauntlets);
+                    GameInformation.PlayerCharacter.Intellect -= c.Gauntlets.Intellect;
+                    GameInformation.PlayerCharacter.Strength -= c.Gauntlets.Strength;
+                    GameInformation.PlayerCharacter.Agility -= c.Gauntlets.Agility;
+                    GameInformation.PlayerCharacter.Defense -= c.Gauntlets.Defense;
                 }
                 c.Gauntlets = w;
                 break;
             case BaseEquipment.EquipmentTypes.Grieves:
-                if (c.Grieves != null) {
+                //unequip current Grieves if there is one
+                if (c.Armor != null) {
                     GameInformation.PlayerInventory.Equipment.Add(c.Grieves);
+                    GameInformation.PlayerCharacter.Intellect -= c.Grieves.Intellect;
+                    GameInformation.PlayerCharacter.Strength -= c.Grieves.Strength;
+                    GameInformation.PlayerCharacter.Agility -= c.Grieves.Agility;
+                    GameInformation.PlayerCharacter.Defense -= c.Grieves.Defense;
                 }
                 c.Grieves = w;
                 break;
             case BaseEquipment.EquipmentTypes.Helmet:
-                if (c.Helmet != null) {
+                //unequip current Helmet if there is one
+                if (c.Armor != null) {
                     GameInformation.PlayerInventory.Equipment.Add(c.Helmet);
+                    GameInformation.PlayerCharacter.Intellect -= c.Helmet.Intellect;
+                    GameInformation.PlayerCharacter.Strength -= c.Helmet.Strength;
+                    GameInformation.PlayerCharacter.Agility -= c.Helmet.Agility;
+                    GameInformation.PlayerCharacter.Defense -= c.Helmet.Defense;
                 }
                 c.Helmet = w;
                 break;
 
         }
-        GameInformation.PlayerInventory.Equipment.Remove(w); // Remove w from inventory
+
+        //equip item
+        GameInformation.PlayerInventory.Equipment.Remove(w);
+        GameInformation.PlayerCharacter.Intellect += w.Strength;
+        GameInformation.PlayerCharacter.Agility += w.Agility;
+        GameInformation.PlayerCharacter.Defense += w.Defense;
+
         InvDetailPanel.SetActive(false);
+        characterChoosePanel.SetActive(false);
         ShowAllEquipments();
     }
 
-    private void equipWeapon(BaseWeapon w) {   // reload all character information
+    private void EquipWeapon(BaseWeapon w) {   // reload all character information
 
         characterChoosePanel.SetActive(true);
 
@@ -336,66 +375,65 @@ public class LoadInventoryPause : MonoBehaviour {
         for (int i = 0; i < 6; i++) {
             if (chars[i] != null) // if a character exists...
             {
-                Transform B = characterChoosePanel.transform.GetChild(i); // all the char buttons
-                B.GetChild(0).gameObject.GetComponent<Text>().text = chars[i].PlayerName; // set player name
+                Transform characterButtons = characterChoosePanel.transform.GetChild(i); // all the char buttons
+                characterButtons.GetChild(0).gameObject.GetComponent<Text>().text = chars[i].PlayerName; // set player name
                 switch (w.WeaponType) // according to weapon type and class
                 {
                     case BaseWeapon.WeaponTypes.Spear:
                     case BaseWeapon.WeaponTypes.Sword:
                         if (chars[i].PlayerClass == BaseCharacterClass.CharacterClasses.Paladin || chars[i].PlayerClass == BaseCharacterClass.CharacterClasses.Knight || chars[i].PlayerClass == BaseCharacterClass.CharacterClasses.Squire) {
-                            Button Button = B.gameObject.GetComponent<Button>();
+                            Button Button = characterButtons.gameObject.GetComponent<Button>();
                             Button.interactable = true;
                             BaseCharacter bc = chars[i];
                             Button.onClick.RemoveAllListeners();
-                            Button.onClick.AddListener(delegate { equipWeaponOnChar(bc, w); });
+                            Button.onClick.AddListener(delegate { EquipWeaponOnChar(bc, w); });
                         } else {
-                            B.gameObject.GetComponent<Button>().interactable = false;
+                            characterButtons.gameObject.GetComponent<Button>().interactable = false;
                         }
                         break;
                     case BaseWeapon.WeaponTypes.Bow:
                         if (chars[i].PlayerClass == BaseCharacterClass.CharacterClasses.Archer || chars[i].PlayerClass == BaseCharacterClass.CharacterClasses.Sniper || chars[i].PlayerClass == BaseCharacterClass.CharacterClasses.Hunter) {
-                            Button Button = B.gameObject.GetComponent<Button>();
+                            Button Button = characterButtons.gameObject.GetComponent<Button>();
                             Button.interactable = true;
                             BaseCharacter bc = chars[i];
                             Button.onClick.RemoveAllListeners();
-                            Button.onClick.AddListener(delegate { equipWeaponOnChar(bc, w); });
+                            Button.onClick.AddListener(delegate { EquipWeaponOnChar(bc, w); });
                         } else {
-                            B.gameObject.GetComponent<Button>().interactable = false;
+                            characterButtons.gameObject.GetComponent<Button>().interactable = false;
                         }
                         break;
                     case BaseWeapon.WeaponTypes.Dagger:
                         if (chars[i].PlayerClass == BaseCharacterClass.CharacterClasses.Thief || chars[i].PlayerClass == BaseCharacterClass.CharacterClasses.Ninja || chars[i].PlayerClass == BaseCharacterClass.CharacterClasses.Assassin) {
-                            Button Button = B.gameObject.GetComponent<Button>();
+                            Button Button = characterButtons.gameObject.GetComponent<Button>();
                             Button.interactable = true;
                             BaseCharacter bc = chars[i];
                             Button.onClick.RemoveAllListeners();
-                            Button.onClick.AddListener(delegate { equipWeaponOnChar(bc, w); });
+                            Button.onClick.AddListener(delegate { EquipWeaponOnChar(bc, w); });
                         } else {
-                            B.gameObject.GetComponent<Button>().interactable = false;
+                            characterButtons.gameObject.GetComponent<Button>().interactable = false;
                         }
                         break;
                     case BaseWeapon.WeaponTypes.Tomb:
                         if (chars[i].PlayerClass == BaseCharacterClass.CharacterClasses.Apprentice || chars[i].PlayerClass == BaseCharacterClass.CharacterClasses.ArchMage || chars[i].PlayerClass == BaseCharacterClass.CharacterClasses.Mage) {
-                            Button Button = B.gameObject.GetComponent<Button>();
+                            Button Button = characterButtons.gameObject.GetComponent<Button>();
                             Button.interactable = true;
                             BaseCharacter bc = chars[i];
                             Button.onClick.RemoveAllListeners();
-                            Button.onClick.AddListener(delegate { equipWeaponOnChar(bc, w); });
+                            Button.onClick.AddListener(delegate { EquipWeaponOnChar(bc, w); });
                         } else {
-                            B.gameObject.GetComponent<Button>().interactable = false;
+                            characterButtons.gameObject.GetComponent<Button>().interactable = false;
                         }
                         break;
                 }
             } else {
-                Transform B = characterChoosePanel.transform.GetChild(i); // all the char buttons
-                B.GetChild(0).gameObject.SetActive(false); // disable button
-                B.gameObject.GetComponent<Button>().interactable = false;
+                Transform characterButtons = characterChoosePanel.transform.GetChild(i); // all the char buttons
+                characterButtons.GetChild(0).gameObject.SetActive(false); // disable button
+                characterButtons.gameObject.GetComponent<Button>().interactable = false;
             }
         }
-
     }
 
-    private void equipEquipment(BaseEquipment w) {   // reload all character information
+    private void EquipEquipment(BaseEquipment w) {   // reload all character information
 
         BaseCharacter[] chars = new BaseCharacter[6];
         chars[0] = GameInformation.PlayerCharacter;
@@ -417,14 +455,13 @@ public class LoadInventoryPause : MonoBehaviour {
                 Button.interactable = true;
                 BaseCharacter bc = chars[i];
                 Button.onClick.RemoveAllListeners();
-                Button.onClick.AddListener(delegate { equipEquipmentOnChar(bc, w); });
+                Button.onClick.AddListener(delegate { EquipEquipmentOnChar(bc, w); });
 
             } else {
-                Transform B = characterChoosePanel.transform.GetChild(i); // all the char buttons
-                B.GetChild(0).gameObject.SetActive(false); // disable button
-                B.gameObject.GetComponent<Button>().interactable = false;
+                Transform characterButtons = characterChoosePanel.transform.GetChild(i); // all the char buttons
+                characterButtons.GetChild(0).gameObject.SetActive(false); // disable button
+                characterButtons.gameObject.GetComponent<Button>().interactable = false;
             }
         }
-
     }
 }

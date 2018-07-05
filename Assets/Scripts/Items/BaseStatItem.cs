@@ -13,6 +13,7 @@ public class BaseStatItem : BaseItem {
         Flawless,
         Legendary
     }
+
     public ItemRaritys ItemRarity { get; set; }
     public int Agility { get; set; }
     public int Defense { get; set; }

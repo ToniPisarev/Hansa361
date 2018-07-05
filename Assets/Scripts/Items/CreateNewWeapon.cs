@@ -40,7 +40,6 @@ public class CreateNewWeapon {
         newWeapon = new BaseWeapon();
 
         newWeapon.ItemDescription = "A formidable weapon...";
-        newWeapon.ItemID = Random.Range(1, 20);
 
         DetermineRarity(level);
         DetermineStats();
@@ -55,14 +54,14 @@ public class CreateNewWeapon {
             newWeapon.SpellEffectID = 0;
         }
 
-        DetermineDamage();
+        DetermineValue();
         DeterminePrice();
         DetermineName();
     }
 
     private void DeterminePrice() {
         price = price + 2 * (newWeapon.Strength + newWeapon.Agility + newWeapon.Defense + newWeapon.Intellect);
-        newWeapon.Price = 2 * newWeapon.Damage + price;
+        newWeapon.Price = 2 * newWeapon.Value + price;
     }
 
     private void DetermineName() {
@@ -111,16 +110,16 @@ public class CreateNewWeapon {
         }
     }
 
-    private void DetermineDamage() {
+    private void DetermineValue() {
         int multiplier = 1;
         if (newWeapon.SpellEffectID != 0) {
             multiplier = 3;
         }
         if (itemType == 1 || itemType == 2) {
-            newWeapon.Damage = itemRarity * Random.Range(10, 15) * multiplier;
+            newWeapon.Value = itemRarity * Random.Range(10, 15) * multiplier;
         } else if (itemType == 3) {
-            newWeapon.Damage = itemRarity * Random.Range(13, 18) * multiplier;
-        } else { newWeapon.Damage = itemRarity * Random.Range(7, 12) * multiplier; }
+            newWeapon.Value = itemRarity * Random.Range(13, 18) * multiplier;
+        } else { newWeapon.Value = itemRarity * Random.Range(7, 12) * multiplier; }
 
     }
 

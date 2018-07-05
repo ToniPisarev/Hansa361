@@ -66,9 +66,9 @@ public class PlayerMovement : MonoBehaviour {
                 }
                 edgeFinder++;
             }
-            rand = WorldInformation.rnd.Next(0, 11);
+            rand = WorldInformation.rnd.Next(0, 21);
             Debug.Log(rand + " random encounter number");
-            if (rand < 3) {
+            if (rand < 1) {
                 //Scene Switch! with GameInformation.PlayerCharacter.PlayerLevel    Random encounter
                 Quest randomBatteQuest = newQuest.ReturnQuest();
                 randomBatteQuest.QuestType = Quest.QuestTypes.Random;
@@ -80,9 +80,9 @@ public class PlayerMovement : MonoBehaviour {
                 if (WorldInformation.CurrentQuest.QuestLocation.AreaType == Area.AreaTypes.Plains) {
                     SceneManager.LoadScene("Combat1");
                 } else if (WorldInformation.CurrentQuest.QuestLocation.AreaType == Area.AreaTypes.Desert) {
-                    SceneManager.LoadScene("Combat1");
-                } else {
                     SceneManager.LoadScene("Combat2");
+                } else {
+                    SceneManager.LoadScene("Combat1");
                 }
             } else {
                 travel(WorldInformation.CurrentArea, tempID + "");

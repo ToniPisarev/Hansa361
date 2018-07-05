@@ -20,8 +20,7 @@ public class PathFinding : MonoBehaviour {
         c = transform.Find("(0,0)").GetComponent<Cell>();
     }
 
-
-    public void showAvailableMoves(Vector3 startPos, int agility) {
+    public void ShowAvailableMoves(Vector3 startPos, int agility) {
         Vector2 t = c.convertWorldPosToIndex(startPos.x, startPos.z);
         Tile startTile = c.GetTileFromPointInCell((int)t.x, (int)t.y);
         List<Tile> openSet = new List<Tile>();
@@ -70,9 +69,8 @@ public class PathFinding : MonoBehaviour {
             }
         }
     }
+
     /*Find a Path
-     *@param startPos: the starting position.
-     *@param targetPos: the end position.
     */
     public int FindPath(Vector3 startPos, Vector3 targetPos, bool isAi, string aiMove) {
         Vector2 t1 = c.convertWorldPosToIndex(startPos.x, startPos.z);
@@ -96,7 +94,6 @@ public class PathFinding : MonoBehaviour {
         HashSet<Tile> closedSet = new HashSet<Tile>();  //Set we arent evaluating -- part of solution
         startTile.gCost = 0;
         openSet.Add(startTile);
-        //Debug.Log("target tile at index [" + t2.x + "," + t2.y + "]"); //DEBUG
 
         while (openSet.Count > 0) {
             Tile currentTile = openSet[0];
@@ -141,7 +138,6 @@ public class PathFinding : MonoBehaviour {
         return -2; //Something else went wrong
     }
 
-
     //RETRACE PATH TO START NODE
     void RetracePath(Tile start, Tile end) {
         List<Tile> path = new List<Tile>();
@@ -160,6 +156,7 @@ public class PathFinding : MonoBehaviour {
         path.Reverse();
         mPath = path;
     }
+
     //DISTANCE BETWEEN TWO TILES
     public int GetDistance(Tile t1, Tile t2) {
         Vector2 pos1 = c.GetPointInCellFromTileIndex(t1.TileIndex);

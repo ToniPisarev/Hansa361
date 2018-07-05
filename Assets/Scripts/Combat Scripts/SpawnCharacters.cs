@@ -33,11 +33,10 @@ public class SpawnCharacters : MonoBehaviour {
         LoadInformation.LoadAllInformation();
         int level = GameInformation.PlayerCharacter.PlayerLevel;
 
-        AddNewSideCharacter(CreateNewCharacter(BaseCharacterClass.CharacterClasses.Thief));
-        if (level > 20) {
-            AddNewSideCharacter(CreateNewCharacter(BaseCharacterClass.CharacterClasses.Apprentice));
-        }
-
+        if ( Random.value < 0.5) {
+            AddNewSideCharacter(CreateLeveledCharacter(level));
+        }        
+       
         // Get the six friendly chararcter
         friendlyList[0] = GameInformation.PlayerCharacter;
         int numFriendlies = 1;

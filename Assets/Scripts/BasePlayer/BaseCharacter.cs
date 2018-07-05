@@ -8,13 +8,16 @@ public class BaseCharacter {
     public string PlayerName { get; set; }
     public int PlayerLevel { get; set; }
     public BaseCharacterClass.CharacterClasses PlayerClass { get; set; }
+
     public int Defense { get; set; }    //physical damage resist
     public int Agility { get; set; }    // dodge/crits
     public int Intellect { get; set; }  //magic damage modifier
     public int Strength { get; set; }   //physical damage modifier
+
     public int PhysicalDamage { get; set; }
     public int MagicDamage { get; set; }
     public int MitigatedDamage { get; set; }
+
     public int CurrentXP { get; set; }  
     public int RequiredXP { get; set; }
     public int AvailableStatPoints { get; set; }

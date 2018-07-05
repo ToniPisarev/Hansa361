@@ -51,9 +51,7 @@ public class CharController : MonoBehaviour {
     private Button a3;
     private Button a4;
     //Attack Information
-    public int myPhysicalDamage;
-    public int myMagicDamage;
-    public int mitigateDamage;
+
     public string weapon;
     private float takeTwoTurnsStartCD = 0.0f;
     private float takeTwoTurnsCooldown = 60;
@@ -66,6 +64,7 @@ public class CharController : MonoBehaviour {
     private int evalP = 0;
 
     void Start() {
+
         //Instantiate
         pf = transform.Find("/Map").GetComponentInParent<PathFinding>();
         c = transform.Find("/Map/(0,0)").GetComponent<Cell>();
@@ -98,8 +97,10 @@ public class CharController : MonoBehaviour {
 
         myHealthBar.updateHealthBar = true;
 
-        //-------------------------------------------------------------------------------------------
-        //Debug.Log("QUEST NAME IS : " + WorldInformation.CurrentQuest.QuestName);
+        //damage calculations
+        myCharacter.PhysicalDamage = (int)(10 + (float)(myCharacter.Strength / 50.00f) * myCharacter.Health);
+        myCharacter.MagicDamage = (int)(10 + (float)(myCharacter.Intellect / 50.00f) * myCharacter.Health);
+        myCharacter.MitigatedDamage = (int)(10 + (float)(myCharacter.Defense / 50.00f) * myCharacter.Health);
 
         //Set tile entity string
         Vector2 myPointInCell = c.convertWorldPosToIndex(transform.position.x, transform.position.z);
@@ -116,33 +117,32 @@ public class CharController : MonoBehaviour {
             skills.Add(new HealingLight(c, myCharacter));
             skills.Add(new SpearAttack(c, myCharacter));
             skills.Add(new HealingLight(c, myCharacter));
-            weapon = "Spear";
         } else if ((int)myCharacter.PlayerClass % 4 == 1) {
             // Apprentice
+            skills.Add(new Fireball(c, myCharacter));
             skills.Add(new Lightning(c, myCharacter));
             skills.Add(new ArcaneBlast(c, myCharacter));
             skills.Add(new Sleep(c, myCharacter));
-            weapon = "Spell Book";
+
         } else if ((int)myCharacter.PlayerClass % 4 == 2) {
             // Thief
             skills.Add(new Stab(c, myCharacter));
             skills.Add(new DoubleStab(c, myCharacter));
             skills.Add(new LegSweep(c, myCharacter));
             skills.Add(new TwoTurn(c, myCharacter));
-            weapon = "Daggers";
         } else if ((int)myCharacter.PlayerClass % 4 == 3) {
             //Archer
             skills.Add(new Kick(c, myCharacter));
             skills.Add(new Fog(c, myCharacter));
             skills.Add(new IceArrow(c, myCharacter));
             skills.Add(new BladeWind(c, myCharacter));
-            weapon = "Bow";
         }
 
-        if (gameObject.transform.parent.name == "Enemies")
+        if (gameObject.transform.parent.name == "Enemies") {
             isAi = true;
-        else
+        } else {
             isAi = false;
+        }
 
         //Debug.Log(gameObject.name + " : current Weapon : " + weapon.getCurrentWeapon());
     }
@@ -154,7 +154,7 @@ public class CharController : MonoBehaviour {
      *---------------------------------------------------------------------------------------------------------------------
      */
 
-    public void attack(List<string> tiles, bool isPhysical, int damage, string spellEffect) {
+    public void Attack(List<string> tiles, bool isPhysical, int damage, string spellEffect) {
         isAttacking = false;
         actionBar.SetActive(false);
         abilityInfo.SetActive(false);
@@ -195,13 +195,13 @@ public class CharController : MonoBehaviour {
      */
     public void ApplyDamage(int theDamage) {
         //Defense mitigates damage
-        if (theDamage > mitigateDamage)
+        if (theDamage > myCharacter.MitigatedDamage)
             //Debug.Log("Lost health - " + (int)(theDamage - mitigateDamage));
-            myCharacter.CurrentHealth -= (int)(theDamage - mitigateDamage);
+            myCharacter.CurrentHealth -= (int)(theDamage - myCharacter.MitigatedDamage);
     }
 
     //Find computer target --------------------------------------------------------------------------------------------------------------------
-    private int computerFindMove(int p) {
+    private int ComputerFindMove(int p) {
         Vector3 target = new Vector3(0, 0, 0);
         Vector2 myPointInCell = c.convertWorldPosToIndex(transform.position.x, transform.position.z);
         Tile myTile = c.GetTileFromPointInCell((int)myPointInCell.x, (int)myPointInCell.y);
@@ -212,7 +212,7 @@ public class CharController : MonoBehaviour {
         //Get the player with the least health
         for (int i = p; i < friendly.childCount; i++) {
             CharController ch = friendly.GetChild(i).GetComponent<CharController>();
-            if (ch.myCharacter.CurrentHealth < minHealth) {
+            if (ch.myCharacter.CurrentHealth < minHealth && ch.myCharacter.CurrentHealth > 0) {
                 minHealth = ch.myCharacter.CurrentHealth;
                 Vector3 pos = friendly.GetChild(i).transform.position;
                 Vector2 tPointInCell = c.convertWorldPosToIndex(pos.x, pos.z);
@@ -277,7 +277,7 @@ public class CharController : MonoBehaviour {
                 } else if (evalP != friendly.childCount - 1) {
                     //Debug.Log("Checking other targets");
                     evalP += 1;
-                    return computerFindMove(evalP);
+                    return ComputerFindMove(evalP);
                 }
 
             }
@@ -309,14 +309,15 @@ public class CharController : MonoBehaviour {
         pf.FindPath(transform.position, target, isAi, "aiMoveFar");
         return k;
     }
+
     //Moves Player --------------------------------------------------------------------------------------------------------------------
-    private void move() {
+    private void Move() {
         int error = -9; //Starting error
 
         //Show paths
         if (showPaths) {
             Instantiate(Resources.Load("SquareProjector"), new Vector3(transform.position.x, -7.9f, transform.position.z), Quaternion.Euler(270, 0, 0));
-            pf.showAvailableMoves(transform.position, myCharacter.Agility);
+            pf.ShowAvailableMoves(transform.position, myCharacter.Agility);
             showPaths = false;
             waitForUserInput = true;
             return;
@@ -337,7 +338,7 @@ public class CharController : MonoBehaviour {
                 aiWait = Time.time;
 
             }
-            rotdir = computerFindMove(evalP);
+            rotdir = ComputerFindMove(evalP);
             error = rotdir;
             if (Time.time - aiWait < 2)
                 return;
@@ -424,6 +425,7 @@ public class CharController : MonoBehaviour {
             ExitMovePhase();
         }
     }
+
     //Exit phases functions--------------------------------------------------------------------------------------------------------------------
     public void ExitMovePhase() {
         //Cant exit untill finished moving
@@ -461,6 +463,7 @@ public class CharController : MonoBehaviour {
             actionBar.transform.GetChild(i).GetComponent<PointerEventsControl>().charControl = this;
         }
     }
+
     public void ExitAttackPhase() {
         if (!takeTwoTurns) {
             //Debug.Log("Ending turn");
@@ -546,7 +549,6 @@ public class CharController : MonoBehaviour {
                 if (rotdir == 3) {
                     rot.y = 270;
                 }
-
             }
 
             rot.x = 0;
@@ -562,11 +564,8 @@ public class CharController : MonoBehaviour {
         }
     }
 
-    /*
-     * Attack
-     * @param cwp = the current weapon equipped 
-     */
-    private void attack() {
+    //Attack --------------------------------------------------------------------------------------------------------------------
+    private void Attack() {
         if (showPaths) {
             if (!isAi)
                 actionBar.SetActive(true);
@@ -614,7 +613,7 @@ public class CharController : MonoBehaviour {
             GUI.Label(new Rect(0, Screen.height - 20, Screen.width, Screen.height), "Rotate! (use left-right arrow key to rotate clockwise).Press 'Enter' to continue...");
         else if (showLabel3 && !isAi)
             GUI.Label(new Rect(0, Screen.height - 20, Screen.width, Screen.height), "Attack! Press 'Enter' to continue...");
-        else if (showLabel5)
+        if (showLabel5)
             GUI.Label(new Rect(0, Screen.height - 40, Screen.width, Screen.height), "TakeTwoTurns has a " + takeTwoTurnsCooldown + "second cooldown.");
     }
 
@@ -641,7 +640,6 @@ public class CharController : MonoBehaviour {
                     showLabel5 = false;
                     takeTwoTurnsStartCD = 0.0f;
                 }
-
             }
 
             //This happens only once
@@ -657,7 +655,6 @@ public class CharController : MonoBehaviour {
                 NextPhase();
             }
 
-
             //Handle Label expiration
             if (Time.time - currentTime > textTime) {
                 if (showLabel1) {
@@ -672,12 +669,11 @@ public class CharController : MonoBehaviour {
                 if (showLabel4) {
                     showLabel4 = false;
                 }
-
             }
 
             //MOVE
             if (isMoving) {
-                move();
+                Move();
                 return;
             }
             //ROTATE
@@ -687,7 +683,7 @@ public class CharController : MonoBehaviour {
             }
             //ATTACK
             if (isAttacking) {
-                attack();
+                Attack();
                 return;
             }
 

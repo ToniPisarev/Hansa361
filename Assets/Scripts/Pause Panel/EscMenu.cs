@@ -223,7 +223,7 @@ public class EscMenu : MonoBehaviour {
         {
             B.gameObject.GetComponent<Button>().interactable = true;
             B.GetChild(0).gameObject.SetActive(true);
-            B.gameObject.GetComponent<Button>().onClick.AddListener(delegate { showInventoryDetailWeapon(c.Weapon, c); });
+            B.gameObject.GetComponent<Button>().onClick.AddListener(delegate { ShowInventoryDetailWeapon(c.Weapon, c); });
             Image i = B.GetChild(0).gameObject.GetComponent<Image>();
             switch (c.Weapon.WeaponType) {
                 case BaseWeapon.WeaponTypes.Sword:
@@ -273,7 +273,7 @@ public class EscMenu : MonoBehaviour {
         {
             B.gameObject.GetComponent<Button>().interactable = true;
             B.GetChild(0).gameObject.SetActive(true);
-            B.gameObject.GetComponent<Button>().onClick.AddListener(delegate { showInventoryDetailEquipment(c.Gauntlets, c); });
+            B.gameObject.GetComponent<Button>().onClick.AddListener(delegate { ShowInventoryDetailEquipment(c.Gauntlets, c); });
         } else // no gauntlets
           {
             B.gameObject.GetComponent<Button>().interactable = false;
@@ -286,7 +286,7 @@ public class EscMenu : MonoBehaviour {
         {
             B.gameObject.GetComponent<Button>().interactable = true;
             B.GetChild(0).gameObject.SetActive(true);
-            B.gameObject.GetComponent<Button>().onClick.AddListener(delegate { showInventoryDetailEquipment(c.Armor, c); });
+            B.gameObject.GetComponent<Button>().onClick.AddListener(delegate { ShowInventoryDetailEquipment(c.Armor, c); });
         } else // no gauntlets
           {
             B.gameObject.GetComponent<Button>().interactable = false;
@@ -299,7 +299,7 @@ public class EscMenu : MonoBehaviour {
         {
             B.gameObject.GetComponent<Button>().interactable = true;
             B.GetChild(0).gameObject.SetActive(true);
-            B.gameObject.GetComponent<Button>().onClick.AddListener(delegate { showInventoryDetailEquipment(c.Helmet, c); });
+            B.gameObject.GetComponent<Button>().onClick.AddListener(delegate { ShowInventoryDetailEquipment(c.Helmet, c); });
         } else // no helmet
           {
             B.gameObject.GetComponent<Button>().interactable = false;
@@ -312,7 +312,7 @@ public class EscMenu : MonoBehaviour {
         {
             B.gameObject.GetComponent<Button>().interactable = true;
             B.GetChild(0).gameObject.SetActive(true);
-            B.gameObject.GetComponent<Button>().onClick.AddListener(delegate { showInventoryDetailEquipment(c.Grieves, c); });
+            B.gameObject.GetComponent<Button>().onClick.AddListener(delegate { ShowInventoryDetailEquipment(c.Grieves, c); });
         } else // no grieves
           {
             B.gameObject.GetComponent<Button>().interactable = false;
@@ -320,7 +320,7 @@ public class EscMenu : MonoBehaviour {
         }
     }
 
-    private void showInventoryDetailWeapon(BaseWeapon p, BaseCharacter c) {
+    private void ShowInventoryDetailWeapon(BaseWeapon p, BaseCharacter c) {
         Image i = inventoryDetailPanel.transform.GetChild(0).gameObject.GetComponent<Image>();
 
         switch (p.WeaponType) {
@@ -360,19 +360,14 @@ public class EscMenu : MonoBehaviour {
         inventoryDetailPanel.transform.GetChild(1).gameObject.GetComponent<Text>().text = p.ItemName + "\n" + p.ItemRarity;
         inventoryDetailPanel.transform.GetChild(2).gameObject.GetComponent<Text>().text = "Price: $ " + p.Price;
         inventoryDetailPanel.transform.GetChild(3).gameObject.GetComponent<Text>().text = p.ItemDescription;
-        inventoryDetailPanel.transform.GetChild(4).gameObject.GetComponent<Text>().text = "Damage: " + p.Damage + "\nStrength: " + p.Strength + "\nIntellect: " + p.Intellect + "\nAgility : " + p.Agility + " \nDefense: " + p.Defense;
+        inventoryDetailPanel.transform.GetChild(4).gameObject.GetComponent<Text>().text = "Damage: " + p.Value + "\nStrength: " + p.Strength + "\nIntellect: " + p.Intellect + "\nAgility : " + p.Agility + " \nDefense: " + p.Defense;
 
         inventoryDetailPanel.SetActive(true);
-        GameObject B = inventoryDetailPanel.transform.GetChild(6).gameObject;
-        B.SetActive(true);
-        B.transform.GetChild(1).gameObject.SetActive(false);
-        B.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Unequip";
-        B.GetComponent<Button>().onClick.RemoveAllListeners();
-        B.GetComponent<Button>().onClick.AddListener(delegate { unequip(p, c); });
-
+        GameObject equipButton = inventoryDetailPanel.transform.GetChild(6).gameObject;
+        equipButton.SetActive(false);
     }
 
-    private void showInventoryDetailEquipment(BaseEquipment e, BaseCharacter c) {
+    private void ShowInventoryDetailEquipment(BaseEquipment e, BaseCharacter c) {
         Image i = inventoryDetailPanel.transform.GetChild(0).gameObject.GetComponent<Image>();
 
         switch (e.EquipmentType) {
@@ -393,47 +388,11 @@ public class EscMenu : MonoBehaviour {
         inventoryDetailPanel.transform.GetChild(1).gameObject.GetComponent<Text>().text = e.ItemName + "\n" + e.ItemRarity;
         inventoryDetailPanel.transform.GetChild(2).gameObject.GetComponent<Text>().text = "Price: $ " + e.Price;
         inventoryDetailPanel.transform.GetChild(3).gameObject.GetComponent<Text>().text = e.ItemDescription;
-        inventoryDetailPanel.transform.GetChild(4).gameObject.GetComponent<Text>().text = "Resistance: " + e.Resistance + "\nStrength: " + e.Strength + "\nIntellect: " + e.Intellect + "\nAgility : " + e.Agility + " \nDefense: " + e.Defense;
+        inventoryDetailPanel.transform.GetChild(4).gameObject.GetComponent<Text>().text = "Resistance: " + e.Value + "\nStrength: " + e.Strength + "\nIntellect: " + e.Intellect + "\nAgility : " + e.Agility + " \nDefense: " + e.Defense;
 
         inventoryDetailPanel.SetActive(true);
-        GameObject B = inventoryDetailPanel.transform.GetChild(6).gameObject;
-        B.SetActive(true);
-        B.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Unequip";
-        B.transform.GetChild(1).gameObject.SetActive(false);
-        B.GetComponent<Button>().onClick.RemoveAllListeners();
-        B.GetComponent<Button>().onClick.AddListener(delegate { unequip(e, c); });
-
-    }
-
-    private void unequip(BaseItem i, BaseCharacter c) {
-        switch (i.ItemType) {
-            case BaseItem.ItemTypes.WEAPON:
-                GameInformation.PlayerInventory.Weapons.Add(c.Weapon);
-                c.Weapon = null;
-                break;
-            case BaseItem.ItemTypes.EQUIPMENT:
-                switch (((BaseEquipment)i).EquipmentType) {
-                    case BaseEquipment.EquipmentTypes.Armor:
-                        GameInformation.PlayerInventory.Equipment.Add(c.Armor);
-                        c.Armor = null;
-                        break;
-                    case BaseEquipment.EquipmentTypes.Gauntlets:
-                        GameInformation.PlayerInventory.Equipment.Add(c.Gauntlets);
-                        c.Gauntlets = null;
-                        break;
-                    case BaseEquipment.EquipmentTypes.Grieves:
-                        GameInformation.PlayerInventory.Equipment.Add(c.Grieves);
-                        c.Grieves = null;
-                        break;
-                    case BaseEquipment.EquipmentTypes.Helmet:
-                        GameInformation.PlayerInventory.Equipment.Add(c.Helmet);
-                        c.Helmet = null;
-                        break;
-                }
-                break;
-        }
-        inventoryDetailPanel.SetActive(false);
-        showCharDetailPanel(c);
+        GameObject equipButton = inventoryDetailPanel.transform.GetChild(6).gameObject;
+        equipButton.SetActive(false);
     }
 
     public void DoPause() {
@@ -452,6 +411,8 @@ public class EscMenu : MonoBehaviour {
 
 
     public void UnPause() {
+        SaveInformation.SaveAllInformation();
+        
         //Set isPaused to false
         isPaused = false;
         //Set time.timescale to 1, this will cause animations and physics to continue updating at regular speed
